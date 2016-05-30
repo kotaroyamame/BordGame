@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="website.iidesign.gomoku.Controller">
+  <children>
+    <Canvas fx:id="canvas" height="300.0" layoutX="150.0" layoutY="50.0" onMouseClicked="#clickCanvas" scaleX="1.3833333333333333" scaleY="1.1666666666666667" width="300.0" />
+    <Button layoutX="116.0" layoutY="51.0" mnemonicParsing="false" opacity="0.13" prefHeight="30.0" prefWidth="30.0" text="Button" />
+  </children>
+</AnchorPane>

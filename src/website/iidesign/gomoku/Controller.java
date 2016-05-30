@@ -39,12 +39,12 @@ public class Controller  implements Initializable {
 		int _y=(int)Math.floor(e.getY())/bord.SIZE;
 		if(bord.setStorn(_x,_y,true))
 			if(shinpan.hantei(_x,_y,true)){
-				text1.setText("æè‚ÌŸ‚¿‚Å‚·");
+				text1.setText("å…ˆæ‰‹ã®å‹ã¡ã§ã™");
 				finish=true;
 			}
 		if(bord.setStorn(_x,_y,false))
 			if(shinpan.hantei(_x,_y,false)){
-				text1.setText("Œãè‚ÌŸ‚¿‚Å‚·");
+				text1.setText("å¾Œæ‰‹ã®å‹ã¡ã§ã™");
 				finish=true;
 			}
 	}

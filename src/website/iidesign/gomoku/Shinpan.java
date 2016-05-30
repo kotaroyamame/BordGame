@@ -17,7 +17,7 @@ public class Shinpan {
 				} else if (this.sarch(x, y, j, i) == storn) {
 					count[0]++;
 				} else {
-					count[1]=count[0];
+					count[1]=i%2==0?0:count[0];
 					count[0]=0;
 					continue out;
 				}
@@ -56,12 +56,12 @@ public class Shinpan {
 	}
 	
 	public static boolean ifFoul(int x, int y, boolean br){
-		//‚±‚±‚É‹Ö‚¶è”»’è
+		//ã“ã“ã«ç¦ã˜ã¦åˆ¤å®š
 		return true;
 	}
-	// ‘Å‚Á‚½‹î‚©‚ç8•ûŒü‚É‘Å‚Á‚½‹î‚ª5‚Â•À‚ñ‚Å‚¢‚ê‚Îtrue‚ğ•Ô‚·
+
 	public boolean hantei(int x, int y, boolean br) {
-		//Ÿ”s”»’è
+
 		int storn = br ? 0 : 1;
 		if (victoryOrDefeat(x, y, br))
 			return true;

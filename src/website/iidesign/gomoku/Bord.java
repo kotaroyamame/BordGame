@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
 
 public class Bord {
 
-	public final static int X = 30;
-	public final static int Y = 30;
+	public final static int X = 10;
+	public final static int Y = 10;
 	public final int SIZE = 20;
 	public final boolean IRON=false;
 	public final boolean INITIATIVE=true;
@@ -32,18 +32,19 @@ public class Bord {
 		gc.setStroke(Color.BLACK);
 
 		for (int i = 0; i < Y; i++) {
-			gc.strokeLine(0, i * SIZE, X * SIZE,i * SIZE);
-			gc.strokeLine( i * SIZE,0, i * SIZE,Y * SIZE);
+			gc.strokeLine(0+SIZE/2, i * SIZE+SIZE/2, X * SIZE-SIZE/2,i * SIZE+SIZE/2);
+			gc.strokeLine( i * SIZE+SIZE/2,0+SIZE/2, i * SIZE+SIZE/2,Y * SIZE-SIZE/2);
 		}
 
 	}
 
 	private void drowBord(int x, int y, boolean br) {
 		if (br)
-			gc.setFill(Color.RED);
+			gc.setFill(Color.BLACK);
 		else
-			gc.setFill(Color.BLUE);
-		gc.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
+			gc.setFill(Color.WHITE);
+//		gc.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
+		gc.fillOval(x * SIZE, y * SIZE, SIZE, SIZE);
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
@@ -67,7 +68,7 @@ public class Bord {
 	}
 	
 	public static int getStorn(int x, int y){
-		if(x<0||X<x||y<0||X<y)
+		if(x<0||X<=x||y<0||X<=y)
 			return -1;
 		return Bord.bord[x][y];
 	}

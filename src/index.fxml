@@ -9,9 +9,9 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="website.iidesign.gomoku.Controller">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="600.0" style="-fx-background-color:#A6523F;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="website.iidesign.gomoku.Controller">
   <children>
-    <Canvas fx:id="canvas" height="300.0" layoutX="150.0" layoutY="90.0" onMouseClicked="#clickCanvas" scaleX="1.3833333333333333" scaleY="1.1666666666666667" width="300.0" />
+    <Canvas fx:id="canvas" height="300.0" layoutX="150.0" layoutY="90.0" onMouseClicked="#clickCanvas" scaleX="1.3833333333333333" scaleY="1.1666666666666667" style="" width="300.0" />
     <Label fx:id="text1" alignment="CENTER" contentDisplay="CENTER" layoutX="263.0" layoutY="20.0" text="">
       <font>
         <Font size="32.0" />

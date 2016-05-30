@@ -32,21 +32,11 @@ public class Shinpan {
 
 	public void hantei() {
 		int count = 0;
-		// for(int x=0;x<bord.X;x++){
-		// for(int y=0;y<bord.Y;y++){
-		// if(bord.isStorn(x, y))
-		// count++;
-		// }
-		// }
-	}
 
+	}
+//‘Å‚Á‚½‹î‚©‚ç8•ûŒü‚É‘Å‚Á‚½‹î‚ª5‚Â•À‚ñ‚Å‚¢‚ê‚Îtrue‚ğ•Ô‚·
 	public boolean hantei(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
-//		boolean[] flags = new boolean[8];
-		//flags‰Šú‰»
-
-//		for (int a=0;a<flags.length;a++)
-//			flags[a] = false;
 		
 		out:for (int i = 1; i <= 8; i++) {
 			System.out.println(i);
@@ -60,8 +50,7 @@ public class Shinpan {
 				}
 			}		
 		}
-//		for(int k=0;k<flags.length;k++)
-//			if(flags[k])return true;
+
 		return false;
 	}
 

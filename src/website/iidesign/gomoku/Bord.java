@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
 
 public class Bord {
 
-	public final int X = 30;
-	public final int Y = 30;
+	public final static int X = 30;
+	public final static int Y = 30;
 	public final int SIZE = 20;
 	public final boolean IRON=false;
 	public final boolean INITIATIVE=true;
@@ -47,7 +47,7 @@ public class Bord {
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
-		if (x < X && y < Y && Bord.bord[x][y] == -1&&count==br) {
+		if (x < X && y < Y && Bord.bord[x][y] == -1&&count==br&&Shinpan.ifFoul(x, y, br)) {
 
 			this.drowBord(x, y, br);
 			Bord.bord[x][y] = br ? 0 : 1;
@@ -66,7 +66,7 @@ public class Bord {
 		}
 	}
 	
-	public int getStorn(int x, int y){
+	public static int getStorn(int x, int y){
 		if(x<0||X<x||y<0||X<y)
 			return -1;
 		return Bord.bord[x][y];

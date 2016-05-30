@@ -7,21 +7,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class Controller  implements Initializable {
 	@FXML
 	private Canvas canvas;
+	@FXML
+	private Label text1;
 	GraphicsContext gc;
 	Bord bord;
 	Shinpan shinpan;
+	private boolean finish=false;
 
 	@Override
   public void initialize(URL location, ResourceBundle resources) {
 		gc=canvas.getGraphicsContext2D();
-		bord=new Bord(gc);
-		shinpan=new Shinpan(bord);
+		shinpan=new Shinpan();
+		bord=new Bord(gc);	
 		init();
 	}
 	
@@ -30,12 +34,19 @@ public class Controller  implements Initializable {
 	}
 	@FXML
 	private void clickCanvas(MouseEvent e){
+		if(finish)return ;
 		int _x=(int)Math.floor(e.getX())/bord.SIZE;
 		int _y=(int)Math.floor(e.getY())/bord.SIZE;
 		if(bord.setStorn(_x,_y,true))
-			if(shinpan.hantei(_x,_y,true))System.out.println("æèŸ‚¿");
+			if(shinpan.hantei(_x,_y,true)){
+				text1.setText("æè‚ÌŸ‚¿‚Å‚·");
+				finish=true;
+			}
 		if(bord.setStorn(_x,_y,false))
-			if(shinpan.hantei(_x,_y,false))System.out.println("ŒãèŸ‚¿");
+			if(shinpan.hantei(_x,_y,false)){
+				text1.setText("Œãè‚ÌŸ‚¿‚Å‚·");
+				finish=true;
+			}
 	}
 
 }

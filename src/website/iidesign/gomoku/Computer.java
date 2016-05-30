@@ -4,6 +4,9 @@ public class Computer {
 
 	public Computer() {
 	}
+	private void serchStone(){
+		
+	}
 	
 	public void setStorn(){
 		

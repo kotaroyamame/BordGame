@@ -26,6 +26,7 @@ public class Bord {
 			for (int j = 0; j < Y; j++)
 				bord[i][j] = -1;
 		}
+		gc.clearRect(0, 0, 1000, 1000);
 	}
 
 	private void strokeLine() {

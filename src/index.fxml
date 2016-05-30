@@ -17,5 +17,6 @@
         <Font size="32.0" />
       </font>
     </Label>
+    <Button fx:id="restart" layoutX="530.0" layoutY="21.0" mnemonicParsing="false" onAction="#onRestart" text="Restart" />
   </children>
 </AnchorPane>

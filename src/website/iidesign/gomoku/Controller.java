@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -16,6 +17,8 @@ public class Controller  implements Initializable {
 	private Canvas canvas;
 	@FXML
 	private Label text1;
+	@FXML
+	private Button restart;
 	GraphicsContext gc;
 	Bord bord;
 	Shinpan shinpan;
@@ -23,14 +26,20 @@ public class Controller  implements Initializable {
 
 	@Override
   public void initialize(URL location, ResourceBundle resources) {
-		gc=canvas.getGraphicsContext2D();
-		shinpan=new Shinpan();
-		bord=new Bord(gc);	
+		
 		init();
 	}
 	
 	private void init(){
-
+		gc=canvas.getGraphicsContext2D();
+		shinpan=new Shinpan();
+		bord=new Bord(gc);
+		finish=false;
+		text1.setText("");
+	}
+	@FXML
+	private void onRestart(){
+		this.init();
 	}
 	@FXML
 	private void clickCanvas(MouseEvent e){

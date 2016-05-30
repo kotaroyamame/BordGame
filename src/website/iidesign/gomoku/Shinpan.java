@@ -7,14 +7,18 @@ public class Shinpan {
 
 	private boolean victoryOrDefeat(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
+		int count[]={0,0};
 		out: for (int i = 1; i <= 8; i++) {
-			System.out.println(i);
+			count[0]=0;
 			for (int j = 1; j < 5; j++) {
-				if (this.sarch(x, y, j, i) == storn && j == 4) {
+				
+				if (this.sarch(x, y, j, i) == storn && j == 4-count[1]) {
 					return true;
 				} else if (this.sarch(x, y, j, i) == storn) {
-
+					count[0]++;
 				} else {
+					count[1]=count[0];
+					count[0]=0;
 					continue out;
 				}
 			}
@@ -32,11 +36,11 @@ public class Shinpan {
 		case 3:
 			return Bord.getStorn(x + val, y + val);
 		case 4:
-			return Bord.getStorn(x - val, y + val);
+			return Bord.getStorn(x - val, y - val);
 		case 5:
 			return Bord.getStorn(x + val, y - val);
 		case 6:
-			return Bord.getStorn(x - val, y - val);
+			return Bord.getStorn(x - val, y + val);
 		case 7:
 			return Bord.getStorn(x, y + val);
 		case 8:

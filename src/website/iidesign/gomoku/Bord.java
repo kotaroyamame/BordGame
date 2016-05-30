@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
 
 public class Bord {
 
-	public final static int X = 10;
-	public final static int Y = 10;
+	public final static int X = 15;
+	public final static int Y = 15;
 	public final int SIZE = 20;
 	public final boolean IRON=false;
 	public final boolean INITIATIVE=true;

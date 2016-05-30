@@ -32,9 +32,10 @@ public class Controller  implements Initializable {
 	private void clickCanvas(MouseEvent e){
 		int _x=(int)Math.floor(e.getX())/bord.SIZE;
 		int _y=(int)Math.floor(e.getY())/bord.SIZE;
-		System.out.println(_x+" "+_y);
-		bord.setStorn(_x,_y,true);
-		shinpan.hantei();
+		if(bord.setStorn(_x,_y,true))
+			if(shinpan.hantei(_x,_y,true))System.out.println("æèŸ‚¿");
+		if(bord.setStorn(_x,_y,false))
+			if(shinpan.hantei(_x,_y,false))System.out.println("ŒãèŸ‚¿");
 	}
 
 }

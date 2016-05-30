@@ -8,6 +8,9 @@ public class Bord {
 	public final int X = 30;
 	public final int Y = 30;
 	public final int SIZE = 20;
+	public final boolean IRON=false;
+	public final boolean INITIATIVE=true;
+	private boolean count=INITIATIVE;
 	public static int bord[][];
 	private GraphicsContext gc;
 
@@ -44,9 +47,11 @@ public class Bord {
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
-		if (x < X && y < Y && Bord.bord[x][y] == -1) {
+		if (x < X && y < Y && Bord.bord[x][y] == -1&&count==br) {
+
 			this.drowBord(x, y, br);
 			Bord.bord[x][y] = br ? 0 : 1;
+			count = !br;
 			return true;
 		} else {
 			return false;
@@ -59,6 +64,12 @@ public class Bord {
 		} else {
 			return false;
 		}
+	}
+	
+	public int getStorn(int x, int y){
+		if(x<0||X<x||y<0||X<y)
+			return -1;
+		return Bord.bord[x][y];
 	}
 
 }

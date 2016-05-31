@@ -37,56 +37,54 @@ public class Computer {
 		return brankList;
 	}
 
+	private boolean isBlank(int[] xy) {
+		ArrayList<int[]> brankList = new ArrayList<int[]>();
+		brankList.clear();
+		brankList.addAll(this.brankCells());
+		for (int[] _xy : brankList) {
+			if (_xy[0] == xy[0] && _xy[1] == xy[1])
+				return true;
+		}
+		return false;
+	}
+
+	private int[] getHumanStoneBlank(int e, int i) {
+		System.out.println(e);
+		switch (e) {
+		case 0:
+			return new int[] { humanStone.get(i)[0], humanStone.get(i)[1] - 1 };
+		case 1:
+			return new int[] { humanStone.get(i)[0] + 1, humanStone.get(i)[1] - 1 };
+		case 2:
+			return new int[] { humanStone.get(i)[0]+1, humanStone.get(i)[1] };
+		case 3:
+			return new int[] { humanStone.get(i)[0] + 1, humanStone.get(i)[1] + 1 };
+		case 4:
+			return new int[] { humanStone.get(i)[0], humanStone.get(i)[1] + 1 };
+		case 5:
+			return new int[] { humanStone.get(i)[0] - 1, humanStone.get(i)[1] + 1 };
+		case 6:
+			return new int[] { humanStone.get(i)[0] - 1, humanStone.get(i)[1] };
+		case 7:
+			return new int[] { humanStone.get(i)[0] - 1, humanStone.get(i)[1] - 1 };
+		}
+		return null;
+	}
+
 	public int[] isRen(int l) {
-		for (int i = 0; i < humanStone.size(); i++) {
-			// for(int j=0;j<humanStone.size();j++){
-			// int x=humanStone.get(i)[0] - humanStone.get(j)[0];
-			// int y=humanStone.get(i)[1] - humanStone.get(j)[1];
-			ArrayList<int[]> brankList = new ArrayList<int[]>();
-			brankList.clear();
-			brankList.addAll(this.brankCells());
+		out:for (int i = 0; i < humanStone.size(); i++) {
 
-			// if(l==Math.abs(x)&&l==Math.abs(y)){
-			boolean isBlank = false;
-			int[] xy = { humanStone.get(i)[0], humanStone.get(i)[1] + 1 };
-			for(int[] _xy:brankList){
-				if(_xy[0]==xy[0]&&_xy[1]==xy[1])
-					isBlank=true;
-			}
-			System.out.println(isBlank+" "+i);
-			if (!isBlank) {
-				xy[0] = humanStone.get(i)[0] + 1;
-				xy[1] = humanStone.get(i)[1];
-				for(int[] _xy:brankList){
-					if(_xy[0]==xy[0]&&_xy[1]==xy[1])
-						isBlank=true;
-				}
-			}
+			int[] xy;
+			int count = 0;
+			do {
+				xy = getHumanStoneBlank((int) Math.floor(Math.random() * 8), i);
+				count++;
+				if(count>3)continue out;
+			} while (!isBlank(xy));
 
-			if (!isBlank) {
-				xy[0] = humanStone.get(i)[0];
-				xy[1] = humanStone.get(i)[1] - 1;
-				for(int[] _xy:brankList){
-					if(_xy[0]==xy[0]&&_xy[1]==xy[1])
-						isBlank=true;
-				}
-			}
+			System.out.println(xy[0] + " " + xy[1]);
+			return xy;
 
-			if (!isBlank) {
-				xy[0] = humanStone.get(i)[0] - 1;
-				xy[1] = humanStone.get(i)[1];
-				for(int[] _xy:brankList){
-					if(_xy[0]==xy[0]&&_xy[1]==xy[1])
-						isBlank=true;
-				}
-			}
-
-			if (isBlank) {
-				System.out.println(xy[0] + " " + xy[1]);
-				return xy;
-			}
-			// }
-			// }
 		}
 
 		return null;

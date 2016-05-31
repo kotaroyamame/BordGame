@@ -23,6 +23,7 @@ public class Controller  implements Initializable {
 	Bord bord;
 	Shinpan shinpan;
 	private boolean finish=false;
+	private Computer com;
 
 	@Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -36,6 +37,7 @@ public class Controller  implements Initializable {
 		bord=new Bord(gc);
 		finish=false;
 		text1.setText("");
+		com=new Computer();
 	}
 	@FXML
 	private void onRestart(){
@@ -51,8 +53,9 @@ public class Controller  implements Initializable {
 				text1.setText("先手の勝ちです");
 				finish=true;
 			}
-		if(bord.setStorn(_x,_y,false))
-			if(shinpan.hantei(_x,_y,false)){
+		int[] comStone=com.setStorn();
+		if(bord.setStorn(comStone[0],comStone[1],false))
+			if(shinpan.hantei(comStone[0],comStone[1],false)){
 				text1.setText("後手の勝ちです");
 				finish=true;
 			}

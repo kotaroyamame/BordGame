@@ -70,7 +70,7 @@ public class Bord {
 
 	public static int getStorn(int x, int y) {
 		if (x < 0 || X <= x || y < 0 || X <= y)
-			return -1;
+			return -2;
 		return Bord.bord[x][y];
 	}
 

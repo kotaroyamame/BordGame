@@ -138,6 +138,7 @@ public class Computer {
 		}
 		return null;
 	}
+
 	private int[] getAiStoneBlank(int e, int i) {
 		// System.out.println(e);
 		switch (e) {
@@ -212,7 +213,7 @@ public class Computer {
 			xyList.add(new int[] { xy[0], xy[1], 2 });
 
 		}
-		
+
 		out: for (int i = 0; i < humanStone.size(); i++) {
 
 			int[] xy;

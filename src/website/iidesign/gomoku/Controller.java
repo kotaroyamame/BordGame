@@ -56,6 +56,8 @@ public class Controller implements Initializable {
 				text1.setText("あなたの勝ちです");
 				finish = true;
 			}
+		if (finish)
+			return;
 		int[] comStone = com.setStorn();
 		if (bord.setStorn(comStone[0], comStone[1], false))
 			if (shinpan.hantei(comStone[0], comStone[1], false)) {

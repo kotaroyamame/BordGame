@@ -1,26 +1,27 @@
 package website.iidesign.gomoku;
-import java.io.IOException;
 
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.*;
-public class Main  extends Application{
+
+public class Main extends Application {
 	@Override
-	    public void start(Stage stage) throws Exception {
+	public void start(Stage stage) throws Exception {
 
-	        Parent root = FXMLLoader.load(getClass().getResource("/index.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/index.fxml"));
 
-	        Scene scene = new Scene(root);
-	        stage.setScene(scene);
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
 
-	        stage.show();
-	    }
+		stage.show();
+	}
 
-  public static void main(String[] args) throws IOException{
-	  Application.launch();
+	public static void main(String[] args) throws IOException {
+		Application.launch();
 
-  }
+	}
 }

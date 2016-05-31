@@ -8,9 +8,9 @@ public class Bord {
 	public final static int X = 15;
 	public final static int Y = 15;
 	public final int SIZE = 20;
-	public final boolean IRON=false;
-	public final boolean INITIATIVE=true;
-	private boolean count=INITIATIVE;
+	public final boolean IRON = false;
+	public final boolean INITIATIVE = true;
+	private boolean count = INITIATIVE;
 	public static int bord[][];
 	private GraphicsContext gc;
 
@@ -33,8 +33,8 @@ public class Bord {
 		gc.setStroke(Color.BLACK);
 
 		for (int i = 0; i < Y; i++) {
-			gc.strokeLine(0+SIZE/2, i * SIZE+SIZE/2, X * SIZE-SIZE/2,i * SIZE+SIZE/2);
-			gc.strokeLine( i * SIZE+SIZE/2,0+SIZE/2, i * SIZE+SIZE/2,Y * SIZE-SIZE/2);
+			gc.strokeLine(0 + SIZE / 2, i * SIZE + SIZE / 2, X * SIZE - SIZE / 2, i * SIZE + SIZE / 2);
+			gc.strokeLine(i * SIZE + SIZE / 2, 0 + SIZE / 2, i * SIZE + SIZE / 2, Y * SIZE - SIZE / 2);
 		}
 
 	}
@@ -44,12 +44,12 @@ public class Bord {
 			gc.setFill(Color.BLACK);
 		else
 			gc.setFill(Color.WHITE);
-//		gc.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
+		// gc.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
 		gc.fillOval(x * SIZE, y * SIZE, SIZE, SIZE);
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
-		if (x < X && y < Y && Bord.bord[x][y] == -1&&count==br&&Shinpan.ifFoul(x, y, br)) {
+		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br && Shinpan.ifFoul(x, y, br)) {
 
 			this.drowBord(x, y, br);
 			Bord.bord[x][y] = br ? 0 : 1;
@@ -67,9 +67,9 @@ public class Bord {
 			return false;
 		}
 	}
-	
-	public static int getStorn(int x, int y){
-		if(x<0||X<=x||y<0||X<=y)
+
+	public static int getStorn(int x, int y) {
+		if (x < 0 || X <= x || y < 0 || X <= y)
 			return -1;
 		return Bord.bord[x][y];
 	}

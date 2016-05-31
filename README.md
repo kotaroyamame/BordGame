@@ -1,6 +1,10 @@
 # BordGame(五目並べ)
 五目並べの連珠の人工知能開発を目指します。
 
+## jarファイルダウンロード
+
+[Download](http://iidesign.website/jar/KotaroGomoku.jar)
+
 ## Shinpan
 審判は禁じ手、勝敗の判定をします
 

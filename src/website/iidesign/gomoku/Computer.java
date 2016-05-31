@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Computer {
 
-	private ArrayList<int[]> myStone = new ArrayList<int[]>();
+	private ArrayList<int[]> aiStone = new ArrayList<int[]>();
 	private ArrayList<int[]> humanStone = new ArrayList<int[]>();
 	private ArrayList<int[]> brankList = new ArrayList<int[]>();
 
@@ -83,12 +83,12 @@ public class Computer {
 	}
 
 	private void serchStone() {
-		myStone.clear();
+		aiStone.clear();
 		humanStone.clear();
 		for (int i = 0; i < Bord.X; i++)
 			for (int j = 0; j < Bord.Y; j++) {
 				if (Bord.bord[i][j] == 1) {
-					myStone.add(new int[] { i, j });
+					aiStone.add(new int[] { i, j });
 				} else if (Bord.bord[i][j] == 0) {
 					humanStone.add(new int[] { i, j });
 				}
@@ -138,6 +138,28 @@ public class Computer {
 		}
 		return null;
 	}
+	private int[] getAiStoneBlank(int e, int i) {
+		// System.out.println(e);
+		switch (e) {
+		case 0:
+			return new int[] { aiStone.get(i)[0], aiStone.get(i)[1] - 1 };
+		case 1:
+			return new int[] { aiStone.get(i)[0] + 1, aiStone.get(i)[1] - 1 };
+		case 2:
+			return new int[] { aiStone.get(i)[0] + 1, aiStone.get(i)[1] };
+		case 3:
+			return new int[] { aiStone.get(i)[0] + 1, aiStone.get(i)[1] + 1 };
+		case 4:
+			return new int[] { aiStone.get(i)[0], aiStone.get(i)[1] + 1 };
+		case 5:
+			return new int[] { aiStone.get(i)[0] - 1, aiStone.get(i)[1] + 1 };
+		case 6:
+			return new int[] { aiStone.get(i)[0] - 1, aiStone.get(i)[1] };
+		case 7:
+			return new int[] { aiStone.get(i)[0] - 1, aiStone.get(i)[1] - 1 };
+		}
+		return null;
+	}
 
 	public int[] isRen(int l) {
 		// 優先順位
@@ -167,7 +189,24 @@ public class Computer {
 				}
 			}
 		}
-		// 上の条件がなかったら人のおいた石の八方の開いているところにランダムに打つ
+		// 上の条件がなかったら自分のおいた石の八方の開いているところにランダムに打つ
+		out: for (int i = 0; i < aiStone.size(); i++) {
+
+			int[] xy;
+			int count = 0;
+			do {
+				xy = getAiStoneBlank((int) Math.floor(Math.random() * 8), i);
+				count++;
+				if (count > 3)
+					continue out;
+			} while (!isBlank(xy));
+
+			// System.out.println(xy[0] + " " + xy[1]);
+
+			xyList.add(new int[] { xy[0], xy[1], 2 });
+
+		}
+		
 		out: for (int i = 0; i < humanStone.size(); i++) {
 
 			int[] xy;
@@ -184,7 +223,6 @@ public class Computer {
 			xyList.add(new int[] { xy[0], xy[1], 1 });
 
 		}
-
 		if (xyList.isEmpty())
 			return null;
 		Collections.sort(xyList, new Comp(2));

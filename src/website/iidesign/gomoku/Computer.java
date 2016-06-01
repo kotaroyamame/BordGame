@@ -52,9 +52,12 @@ public class Computer {
 				if (this.sarch(x, y, j, i)[0] == storn && j == l - count[1]) {
 
 					if (this.sarch(x, y, j + 1, i)[0] == -1 && this.sarch(x, y, 0, i)[0] == -1) {// nこ並んでなおかつ両端が開いている場合。
-
-						xyList.add(new int[] { this.sarch(x, y, j + 1, i)[0], this.sarch(x, y, j + 1, i)[1],
-						    this.sarch(x, y, j + 1, i)[2], 4 });
+						if(count[1]==0)
+							xyList.add(new int[] { this.sarch(x, y, j + 1, i)[0], this.sarch(x, y, j + 1, i)[1],
+									this.sarch(x, y, j + 1, i)[2], 4 });
+						else
+							xyList.add(new int[] { this.sarch(x, y, 0, i)[0], this.sarch(x, y, 0, i)[1],
+							    this.sarch(x, y, 0, i)[2], 5 });
 
 					} else if (this.sarch(x, y, j + 1, i)[0] == -1) {
 

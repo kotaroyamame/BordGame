@@ -46,6 +46,29 @@ public class Bord {
 			gc.setFill(Color.WHITE);
 		gc.fillOval(x * SIZE, y * SIZE, SIZE, SIZE);
 	}
+	
+	public static int sarch(int x, int y, int val, int pt) {
+		switch (pt) {
+		case 1:
+			return Bord.getStorn(x + val, y);
+		case 2:
+			return Bord.getStorn(x - val, y);
+		case 3:
+			return Bord.getStorn(x + val, y + val);
+		case 4:
+			return Bord.getStorn(x - val, y - val);
+		case 5:
+			return Bord.getStorn(x + val, y - val);
+		case 6:
+			return Bord.getStorn(x - val, y + val);
+		case 7:
+			return Bord.getStorn(x, y + val);
+		case 8:
+			return Bord.getStorn(x, y - val);
+		default:
+			return -1;
+		}
+	}
 
 	public boolean setStorn(int x, int y, boolean br) {
 		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br) { //&& Shinpan.ifFoul(x, y, br)!=-1) {

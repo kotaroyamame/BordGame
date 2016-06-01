@@ -167,6 +167,46 @@ public class Computer {
 		return null;
 	}
 
+	private static int[] threeThree(int x, int y, boolean br) {
+		int storn = br ? 0 : 1;
+		int count[]={0,0};
+		boolean flag=false;
+//		ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
+		out: for (int i = 1; i <= 8; i++) {
+			
+			count[0]=0;
+			for (int j = 1; j < 3; j++) {
+				
+				if (Bord.sarch(x, y, j, i) == storn && j == 2-count[1]&& Bord.sarch(x, y, j+1, i) ==-1 && Bord.sarch(x, y, 0, i) ==-1) {
+					if(count[1]==0){	
+						if(flag){
+							flag=false;
+							return new int[]{-1,x,y};
+						}
+						flag=true;
+					}else if(Bord.sarch(x, y, -j-1, i) ==-1){
+						if(flag){
+							flag=false;
+							return new int[]{-1,x,y};
+						}
+						flag=true;
+					}
+					
+					
+					
+				} else if (Bord.sarch(x, y, j, i) == storn) {
+					count[0]++;
+				} else {
+					count[1]=i%2==0?0:count[0];
+					count[0]=0;
+					continue out;
+				}
+			}
+		}
+
+		return new int[]{-2,0,0};
+	}
+	
 	public int[] isRen(int l) {
 		// 優先順位
 		// HashMap<String,Integer> priority=new HashMap<String,Integer>();
@@ -184,7 +224,13 @@ public class Computer {
 				if (this.ifThree(i1, j1, human, 3)[0] == -1) {
 
 					xyList.add(new int[] { this.ifThree(i1, j1, human, 3)[1], this.ifThree(i1, j1, human, 3)[2],
-					    this.ifThree(i1, j1, human, 3)[3] });
+					    this.ifThree(i1, j1, human, 3)[3]+5 });
+
+				}
+				if (this.ifThree(i1, j1, ai, 5)[0] == -1) {
+
+					xyList.add(new int[] { this.ifThree(i1, j1, ai, 5)[1], this.ifThree(i1, j1, ai, 5)[2],
+					    this.ifThree(i1, j1, ai, 5)[3] + 20 });
 
 				}
 				if (this.ifThree(i1, j1, ai, 4)[0] == -1) {
@@ -193,10 +239,20 @@ public class Computer {
 					    this.ifThree(i1, j1, ai, 4)[3] + 8 });
 
 				}
+				if (threeThree( i1, j1, ai)[0] == -1) {
+
+					xyList.add(new int[] {i1, j1,6});
+
+				}
 				if (this.ifThree(i1, j1, ai, 3)[0] == -1) {
 
 					xyList.add(new int[] { this.ifThree(i1, j1, ai, 3)[1], this.ifThree(i1, j1, ai, 3)[2],
-					    this.ifThree(i1, j1, ai, 3)[3] + 1 });
+					    this.ifThree(i1, j1, ai, 3)[3] + 6 });
+
+				}
+				if (this.ifThree(i1, j1, ai, 2)[0] == -1) {
+
+					xyList.add(new int[] { this.ifThree(i1, j1, ai, 2)[1], this.ifThree(i1, j1, ai, 2)[2],2 });
 
 				}
 			}

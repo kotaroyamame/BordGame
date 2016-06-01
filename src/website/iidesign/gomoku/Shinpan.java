@@ -26,8 +26,37 @@ public class Shinpan {
 
 		return false;
 	}
+	
+	private static boolean threethreeFaol(int x, int y, boolean br) {
+		int storn = br ? 0 : 1;
+		int count[]={0,0};
+		boolean flag=false;
+		out: for (int i = 1; i <= 8; i++) {
+			
+			count[0]=0;
+			for (int j = 1; j < 3; j++) {
+				
+				if (sarch(x, y, j, i) == storn && j == 2-count[1]&& sarch(x, y, j+1, i) ==-1 && sarch(x, y, 0, i) ==-1) {
+					if(flag){
+						flag=false;
+						return true;
+					}
+					flag=true;
+					
+				} else if (sarch(x, y, j, i) == storn) {
+					count[0]++;
+				} else {
+					count[1]=i%2==0?0:count[0];
+					count[0]=0;
+					continue out;
+				}
+			}
+		}
 
-	private int sarch(int x, int y, int val, int pt) {
+		return false;
+	}
+
+	private static int sarch(int x, int y, int val, int pt) {
 		switch (pt) {
 		case 1:
 			return Bord.getStorn(x + val, y);
@@ -50,14 +79,15 @@ public class Shinpan {
 		}
 	}
 
-	public void hantei() {
-		int count = 0;
-
-	}
+//	public void hantei() {
+//		int count = 0;
+//
+//	}
 	
-	public static boolean ifFoul(int x, int y, boolean br){
+	public static int ifFoul(int x, int y, boolean br){
 		//ここに禁じて判定
-		return true;
+		if(threethreeFaol( x,  y, br))return 0;
+		return -1;
 	}
 
 	public boolean hantei(int x, int y, boolean br) {

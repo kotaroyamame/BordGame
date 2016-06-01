@@ -51,11 +51,16 @@ public class Controller implements Initializable {
 			return;
 		int _x = (int) Math.floor(e.getX()) / bord.SIZE;
 		int _y = (int) Math.floor(e.getY()) / bord.SIZE;
-		if (bord.setStorn(_x, _y, true)){
-			if (shinpan.hantei(_x, _y, true)) {
-				text1.setText("あなたの勝ちです");
-				finish = true;
+		if(Shinpan.ifFoul(_x, _y, true)==-1){
+			text1.setText("あなたの番です");
+			if (bord.setStorn(_x, _y, true)){
+				if (shinpan.hantei(_x, _y, true)) {
+					text1.setText("あなたの勝ちです");
+					finish = true;
+				}
 			}
+		}else if(Shinpan.ifFoul(_x, _y, true)==0){
+			text1.setText("先手の三々は反則です");
 		}
 		if (finish)
 			return;

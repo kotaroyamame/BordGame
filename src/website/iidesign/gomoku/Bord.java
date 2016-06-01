@@ -48,7 +48,7 @@ public class Bord {
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
-		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br && Shinpan.ifFoul(x, y, br)) {
+		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br) { //&& Shinpan.ifFoul(x, y, br)!=-1) {
 
 			this.drowBord(x, y, br);
 			Bord.bord[x][y] = br ? 0 : 1;

@@ -169,16 +169,18 @@ public class Computer {
 
 	private static int[] threeThree(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
-		int count[]={0,0};
+		int[][] count={{0,0},{0,0}};//{{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}
 		boolean flag=false;
 //		ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
 		out: for (int i = 1; i <= 8; i++) {
 			
-			count[0]=0;
-			for (int j = 1; j < 3; j++) {
+			count[0][0]=0;
+			count[1][0]=0;
+			int k=0;
+			for (int j = 1; j < 3+k; j++) {
 				
-				if (Bord.sarch(x, y, j, i) == storn && j == 2-count[1]&& Bord.sarch(x, y, j+1, i) ==-1 && Bord.sarch(x, y, 0, i) ==-1) {
-					if(count[1]==0){	
+				if (Bord.sarch(x, y, j, i) == storn && j == (2+k)-count[0][1]&& Bord.sarch(x, y, j+1, i) ==-1 && Bord.sarch(x, y, 0, i) ==-1) {
+					if(count[0][1]==0){	
 						if(flag){
 							flag=false;
 							return new int[]{-1,x,y};
@@ -195,10 +197,14 @@ public class Computer {
 					
 					
 				} else if (Bord.sarch(x, y, j, i) == storn) {
-					count[0]++;
-				} else {
-					count[1]=i%2==0?0:count[0];
-					count[0]=0;
+					count[0][0]++;
+				} else if (Bord.sarch(x, y, j, i) == -1&&count[1][0]<1){//飛び石三
+					System.out.println("飛び石三");
+					count[1][0]++;
+					k=1;
+				}else {
+					count[0][1]=i%2==0?0:count[0][0];
+					count[0][0]=0;
 					continue out;
 				}
 			}

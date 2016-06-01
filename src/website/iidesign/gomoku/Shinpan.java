@@ -37,11 +37,21 @@ public class Shinpan {
 			for (int j = 1; j < 3; j++) {
 				
 				if (sarch(x, y, j, i) == storn && j == 2-count[1]&& sarch(x, y, j+1, i) ==-1 && sarch(x, y, 0, i) ==-1) {
-					if(flag){
-						flag=false;
-						return true;
+					if(count[1]==0){	
+						if(flag){
+							flag=false;
+							return true;
+						}
+						flag=true;
+					}else if(sarch(x, y, -j-1, i) ==-1){
+						if(flag){
+							flag=false;
+							return true;
+						}
+						flag=true;
 					}
-					flag=true;
+					
+					
 					
 				} else if (sarch(x, y, j, i) == storn) {
 					count[0]++;

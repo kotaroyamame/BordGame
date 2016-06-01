@@ -179,7 +179,7 @@ public class Computer {
 			for (int j1 = 0; j1 < Bord.Y; j1++) {
 				if (this.ifThree(i1, j1, human, 4)[0] == -1) {
 					xyList.add(new int[] { this.ifThree(i1, j1, human, 4)[1], this.ifThree(i1, j1, human, 4)[2],
-					    this.ifThree(i1, j1, human, 4)[3] + 4 });
+					    this.ifThree(i1, j1, human, 4)[3] + 7 });
 				}
 				if (this.ifThree(i1, j1, human, 3)[0] == -1) {
 
@@ -190,7 +190,7 @@ public class Computer {
 				if (this.ifThree(i1, j1, ai, 4)[0] == -1) {
 
 					xyList.add(new int[] { this.ifThree(i1, j1, ai, 4)[1], this.ifThree(i1, j1, ai, 4)[2],
-					    this.ifThree(i1, j1, ai, 4)[3] + 3 });
+					    this.ifThree(i1, j1, ai, 4)[3] + 8 });
 
 				}
 				if (this.ifThree(i1, j1, ai, 3)[0] == -1) {

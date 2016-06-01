@@ -44,7 +44,6 @@ public class Bord {
 			gc.setFill(Color.BLACK);
 		else
 			gc.setFill(Color.WHITE);
-		// gc.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
 		gc.fillOval(x * SIZE, y * SIZE, SIZE, SIZE);
 	}
 

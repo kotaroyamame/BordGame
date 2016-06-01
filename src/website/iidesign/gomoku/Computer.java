@@ -10,6 +10,8 @@ public class Computer {
 	private ArrayList<int[]> aiStone = new ArrayList<int[]>();
 	private ArrayList<int[]> humanStone = new ArrayList<int[]>();
 	private ArrayList<int[]> brankList = new ArrayList<int[]>();
+	private boolean human = true;
+	private boolean ai = false;
 
 	public Computer() {
 		serchStone();
@@ -172,26 +174,26 @@ public class Computer {
 		// 人の3つ揃った石を検索
 		for (int i1 = 0; i1 < Bord.X; i1++) {
 			for (int j1 = 0; j1 < Bord.Y; j1++) {
-				if (this.ifThree(i1, j1, true, 4)[0] == -1) {
-					xyList.add(new int[] { this.ifThree(i1, j1, true, 4)[1], this.ifThree(i1, j1, true, 4)[2],
-					    this.ifThree(i1, j1, true, 4)[3] + 1 });
+				if (this.ifThree(i1, j1, human, 4)[0] == -1) {
+					xyList.add(new int[] { this.ifThree(i1, j1, human, 4)[1], this.ifThree(i1, j1, human, 4)[2],
+					    this.ifThree(i1, j1, human, 4)[3] + 4 });
 				}
-				if (this.ifThree(i1, j1, true, 3)[0] == -1) {
+				if (this.ifThree(i1, j1, human, 3)[0] == -1) {
 
-					xyList.add(new int[] { this.ifThree(i1, j1, true, 3)[1], this.ifThree(i1, j1, true, 3)[2],
-					    this.ifThree(i1, j1, true, 3)[3] });
-
-				}
-				if (this.ifThree(i1, j1, false, 4)[0] == -1) {
-
-					xyList.add(new int[] { this.ifThree(i1, j1, false, 4)[1], this.ifThree(i1, j1, false, 4)[2],
-					    this.ifThree(i1, j1, false, 4)[3] + 3 });
+					xyList.add(new int[] { this.ifThree(i1, j1, human, 3)[1], this.ifThree(i1, j1, human, 3)[2],
+					    this.ifThree(i1, j1, human, 3)[3] });
 
 				}
-				if (this.ifThree(i1, j1, false, 3)[0] == -1) {
+				if (this.ifThree(i1, j1, ai, 4)[0] == -1) {
 
-					xyList.add(new int[] { this.ifThree(i1, j1, false, 3)[1], this.ifThree(i1, j1, false, 3)[2],
-					    this.ifThree(i1, j1, false, 3)[3] + 1 });
+					xyList.add(new int[] { this.ifThree(i1, j1, ai, 4)[1], this.ifThree(i1, j1, ai, 4)[2],
+					    this.ifThree(i1, j1, ai, 4)[3] + 3 });
+
+				}
+				if (this.ifThree(i1, j1, ai, 3)[0] == -1) {
+
+					xyList.add(new int[] { this.ifThree(i1, j1, ai, 3)[1], this.ifThree(i1, j1, ai, 3)[2],
+					    this.ifThree(i1, j1, ai, 3)[3] + 1 });
 
 				}
 			}

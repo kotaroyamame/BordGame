@@ -51,19 +51,22 @@ public class Controller implements Initializable {
 			return;
 		int _x = (int) Math.floor(e.getX()) / bord.SIZE;
 		int _y = (int) Math.floor(e.getY()) / bord.SIZE;
-		if (bord.setStorn(_x, _y, true))
+		if (bord.setStorn(_x, _y, true)){
 			if (shinpan.hantei(_x, _y, true)) {
 				text1.setText("あなたの勝ちです");
 				finish = true;
 			}
+		}
 		if (finish)
 			return;
 		int[] comStone = com.setStorn();
-		if (bord.setStorn(comStone[0], comStone[1], false))
+
+		if (bord.setStorn(comStone[0], comStone[1], false)){
 			if (shinpan.hantei(comStone[0], comStone[1], false)) {
 				text1.setText("コンピュータの勝ちです");
 				finish = true;
 			}
+		}
 	}
 
 }

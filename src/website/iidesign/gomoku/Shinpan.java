@@ -1,4 +1,6 @@
 package website.iidesign.gomoku;
+import java.io.IOException;
+
 import website.iidesign.gomoku.Bord;
 public class Shinpan {
 
@@ -12,9 +14,9 @@ public class Shinpan {
 			count[0]=0;
 			for (int j = 1; j < 5; j++) {
 				
-				if (this.sarch(x, y, j, i) == storn && j == 4-count[1]) {
+				if (sarch(x, y, j, i) == storn && j == 4-count[1]) {
 					return true;
-				} else if (this.sarch(x, y, j, i) == storn) {
+				} else if (sarch(x, y, j, i) == storn) {
 					count[0]++;
 				} else {
 					count[1]=i%2==0?0:count[0];
@@ -58,7 +60,6 @@ public class Shinpan {
 				} else if (sarch(x, y, j, i) == storn) {
 					count[0][0]++;
 				}else if (sarch(x, y, j, i) == -1&&count[1][0]<1){//飛び石三
-					System.out.println("飛び石三");
 					count[1][0]++;
 					k=1;
 				} else {
@@ -109,8 +110,14 @@ public class Shinpan {
 	public boolean hantei(int x, int y, boolean br) {
 
 		int storn = br ? 0 : 1;
-		if (victoryOrDefeat(x, y, br))
+		if (victoryOrDefeat(x, y, br)){
+			try {
+				Bord.endLog();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return true;
+		}
 		return false;
 	}
 

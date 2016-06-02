@@ -1,20 +1,28 @@
 package website.iidesign.gomoku;
 
+import java.io.IOException;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import website.iidesign.csvFileMaker.CsvFileMaker;
 
 public class Bord {
 
 	public final static int X = 15;
 	public final static int Y = 15;
 	public final int SIZE = 20;
-	public final boolean IRON = false;
-	public final boolean INITIATIVE = true;
-	private boolean count = INITIATIVE;
+	public static final boolean IRON = false;
+	public static final boolean INITIATIVE = true;
+	protected static boolean count = INITIATIVE;
+	protected int mindBord[][];
 	public static int bord[][];
 	private GraphicsContext gc;
-
+	
+	static CsvFileMaker csvMake;
+	public Bord() {		
+	}
 	public Bord(GraphicsContext gc) {
+		csvMake=new CsvFileMaker("log","log");
 		this.gc = gc;
 		bord = new int[X][Y];
 		init();
@@ -27,6 +35,11 @@ public class Bord {
 				bord[i][j] = -1;
 		}
 		gc.clearRect(0, 0, 1000, 1000);
+		try {
+			setLog("START"+"\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void strokeLine() {
@@ -45,6 +58,13 @@ public class Bord {
 		else
 			gc.setFill(Color.WHITE);
 		gc.fillOval(x * SIZE, y * SIZE, SIZE, SIZE);
+	}
+	
+	private static void setLog(String value) throws IOException{
+		csvMake.writeFile(value);
+	}
+	public static void endLog() throws IOException{
+		setLog("END"+"\n\n");
 	}
 	
 	public static int sarch(int x, int y, int val, int pt) {
@@ -71,10 +91,17 @@ public class Bord {
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
+		int stone;
 		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br) { //&& Shinpan.ifFoul(x, y, br)!=-1) {
 
 			this.drowBord(x, y, br);
-			Bord.bord[x][y] = br ? 0 : 1;
+			stone=br ? 0 : 1;
+			Bord.bord[x][y] = stone;
+			try {
+				setLog(String.valueOf(stone)+','+String.valueOf(x)+','+String.valueOf(y)+"\n");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			count = !br;
 			return true;
 		} else {
@@ -95,5 +122,6 @@ public class Bord {
 			return -2;
 		return Bord.bord[x][y];
 	}
+	
 
 }

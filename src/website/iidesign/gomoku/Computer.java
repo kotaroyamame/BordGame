@@ -1,9 +1,8 @@
 package website.iidesign.gomoku;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+
 
 public class Computer {
 
@@ -199,7 +198,6 @@ public class Computer {
 				} else if (Bord.sarch(x, y, j, i) == storn) {
 					count[0][0]++;
 				} else if (Bord.sarch(x, y, j, i) == -1&&count[1][0]<1){//飛び石三
-					System.out.println("飛び石三");
 					count[1][0]++;
 					k=1;
 				}else {
@@ -214,11 +212,11 @@ public class Computer {
 	}
 	
 	public int[] isRen(int l) {
-		// 優先順位
-		// HashMap<String,Integer> priority=new HashMap<String,Integer>();
+		MindBord mindBord=new MindBord();
+		
 		ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
 		// {駒の種類、x座標,y座標,優先順位}のリスト
-		int[][] priority;
+//		int[][] priority;
 
 		// 人の3つ揃った石を検索
 		for (int i1 = 0; i1 < Bord.X; i1++) {

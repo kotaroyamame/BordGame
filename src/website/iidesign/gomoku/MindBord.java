@@ -7,12 +7,20 @@ public class MindBord extends Bord{
 	public MindBord() {
 		super();
 		mindBord = new int[X][Y];
-		mindBord = bord;
+//		mindBord = bord;
 		mindCount=count;
+		for (int i = 0; i < X; i++) {
+			for (int j = 0; j < Y; j++)
+				mindBord[i][j] = -1;
+		}
 	}
 	
 	public void sysncMindBord(){
-		mindBord = bord;
+		for (int i = 0; i < Bord.X; i++) {
+			for (int j = 0; j < Bord.Y; j++) {
+				mindBord[i][j] = Bord.bord[i][j];
+			}
+		}
 	}
 	public int[][] getMindBord(){
 		return mindBord;
@@ -42,7 +50,7 @@ public class MindBord extends Bord{
 		}
 	}
 
-	public boolean setStorn(int x, int y, boolean br) {
+	public boolean setMindStorn(int x, int y, boolean br) {
 		int stone;
 		if (x < X && y < Y && mindBord[x][y] == -1 && mindCount == br) { //&& Shinpan.ifFoul(x, y, br)!=-1) {
 

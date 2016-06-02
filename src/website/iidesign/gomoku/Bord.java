@@ -15,7 +15,7 @@ public class Bord {
 	public static final boolean INITIATIVE = true;
 	protected static boolean count = INITIATIVE;
 	protected int mindBord[][];
-	public static int bord[][];
+	protected static int bord[][];
 	private GraphicsContext gc;
 	
 	static CsvFileMaker csvMake;
@@ -24,7 +24,7 @@ public class Bord {
 	public Bord(GraphicsContext gc) {
 		csvMake=new CsvFileMaker("log","log");
 		this.gc = gc;
-		bord = new int[X][Y];
+		Bord.bord = new int[X][Y];
 		init();
 		strokeLine();
 	}
@@ -32,7 +32,7 @@ public class Bord {
 	private void init() {
 		for (int i = 0; i < X; i++) {
 			for (int j = 0; j < Y; j++)
-				bord[i][j] = -1;
+				Bord.bord[i][j] = -1;
 		}
 		gc.clearRect(0, 0, 1000, 1000);
 		try {

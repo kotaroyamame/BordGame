@@ -51,9 +51,11 @@ public class Controller implements Initializable {
 			return;
 		int _x = (int) Math.floor(e.getX()) / bord.SIZE;
 		int _y = (int) Math.floor(e.getY()) / bord.SIZE;
-		if(Shinpan.ifFoul(_x, _y, true)==-1){
+		int hbr=Shinpan.ifFoul(_x, _y, true);
+		if(hbr==-1){
 			text1.setText("あなたの番です");
-			if (bord.setStorn(_x, _y, true)){
+			boolean hSet=bord.setStorn(_x, _y, true);
+			if (hSet){
 				if (shinpan.hantei(_x, _y, true)) {
 					text1.setText("あなたの勝ちです");
 					finish = true;
@@ -64,14 +66,18 @@ public class Controller implements Initializable {
 		}
 		if (finish)
 			return;
+		aiRanch();
+	}
+	private void aiRanch(){
 		int[] comStone = com.setStorn();
-
-		if (bord.setStorn(comStone[0], comStone[1], false)){
+		boolean aSet=bord.setStorn(comStone[0], comStone[1], false);
+		if (aSet){
 			if (shinpan.hantei(comStone[0], comStone[1], false)) {
 				text1.setText("コンピュータの勝ちです");
 				finish = true;
 			}
 		}
+		
 	}
 
 }

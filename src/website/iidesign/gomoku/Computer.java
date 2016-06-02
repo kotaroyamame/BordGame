@@ -217,7 +217,7 @@ public class Computer {
 		int anticipate=1;//先読みの手数
 		
 		if(10<COUNT){
-			anticipate=10;
+			anticipate=5;
 		}
 		ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
 		ArrayList<int[]> aiPoint = new ArrayList<int[]>();
@@ -347,7 +347,7 @@ public class Computer {
 				humanP=humanP+humanPoint.get(j0)[2];
 			}
 			for(int j1=0;j1<aiPoint.size();j1++){
-				aiP=aiP+aiPoint.get(j1)[2];
+				aiP=aiP+aiPoint.get(j1)[2]*(aiPoint.size()-j1);
 			}
 			pointData[p][0]=p;
 			pointData[p][1]=humanP;

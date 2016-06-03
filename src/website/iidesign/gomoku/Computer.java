@@ -12,9 +12,6 @@ public class Computer extends Judge {
 	private boolean ai = false;
 	private static int COUNT=0;
 	
-	MindBord mindBord;
-	
-
 	public Computer() {
 		super(new MindBord());
 		serchStone();
@@ -76,7 +73,6 @@ public class Computer extends Judge {
 		return null;
 	}
 
-	
 
 	public int[] isRen(int l) {//最終的には最適なxy値を返す
 		int anticipate=1;//先読みの手数

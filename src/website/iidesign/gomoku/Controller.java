@@ -33,7 +33,8 @@ public class Controller implements Initializable {
 
 	private void init() {
 		gc = canvas.getGraphicsContext2D();
-		shinpan = new Shinpan();
+		bord = new Bord();
+		shinpan = new Shinpan(bord);
 		bord = new Bord(gc);
 		finish = false;
 		text1.setText("");
@@ -51,7 +52,7 @@ public class Controller implements Initializable {
 			return;
 		int _x = (int) Math.floor(e.getX()) / bord.SIZE;
 		int _y = (int) Math.floor(e.getY()) / bord.SIZE;
-		int hbr=Shinpan.ifFoul(_x, _y, true);
+		int hbr=shinpan.ifFoul(_x, _y, true);
 		if(hbr==-1){
 			text1.setText("あなたの番です");
 			boolean hSet=bord.setStorn(_x, _y, true);
@@ -61,7 +62,7 @@ public class Controller implements Initializable {
 					finish = true;
 				}
 			}
-		}else if(Shinpan.ifFoul(_x, _y, true)==0){
+		}else if(shinpan.ifFoul(_x, _y, true)==0){
 			text1.setText("先手の三々は反則です");
 		}
 		if (finish)

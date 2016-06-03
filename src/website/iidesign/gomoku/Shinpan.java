@@ -3,8 +3,10 @@ import java.io.IOException;
 
 import website.iidesign.gomoku.Bord;
 public class Shinpan {
+	Bord bord;
 
-	public Shinpan() {
+	public Shinpan(Bord bord) {
+		this.bord=bord;
 	}
 
 	private boolean victoryOrDefeat(int x, int y, boolean br) {
@@ -29,7 +31,7 @@ public class Shinpan {
 		return false;
 	}
 	
-	private static boolean threethreeFaol(int x, int y, boolean br) {
+	private boolean threethreeFaol(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
 		int[][] count={{0,0},{0,0}};//{{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}
 		boolean flag=false;
@@ -73,24 +75,24 @@ public class Shinpan {
 		return false;
 	}
 
-	private static int sarch(int x, int y, int val, int pt) {
+	private int sarch(int x, int y, int val, int pt) {
 		switch (pt) {
 		case 1:
-			return Bord.getStorn(x + val, y);
+			return bord.getStorn(x + val, y);
 		case 2:
-			return Bord.getStorn(x - val, y);
+			return bord.getStorn(x - val, y);
 		case 3:
-			return Bord.getStorn(x + val, y + val);
+			return bord.getStorn(x + val, y + val);
 		case 4:
-			return Bord.getStorn(x - val, y - val);
+			return bord.getStorn(x - val, y - val);
 		case 5:
-			return Bord.getStorn(x + val, y - val);
+			return bord.getStorn(x + val, y - val);
 		case 6:
-			return Bord.getStorn(x - val, y + val);
+			return bord.getStorn(x - val, y + val);
 		case 7:
-			return Bord.getStorn(x, y + val);
+			return bord.getStorn(x, y + val);
 		case 8:
-			return Bord.getStorn(x, y - val);
+			return bord.getStorn(x, y - val);
 		default:
 			return -1;
 		}
@@ -101,9 +103,9 @@ public class Shinpan {
 //
 //	}
 	
-	public static int ifFoul(int x, int y, boolean br){
+	public int ifFoul(int x, int y, boolean br){
 		//ここに禁じて判定
-		if(threethreeFaol( x,  y, br))return 0;
+		if(this.threethreeFaol( x,  y, br))return 0;
 		return -1;
 	}
 
@@ -112,7 +114,7 @@ public class Shinpan {
 		int storn = br ? 0 : 1;
 		if (victoryOrDefeat(x, y, br)){
 			try {
-				Bord.endLog();
+				bord.endLog();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

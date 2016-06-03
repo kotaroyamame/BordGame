@@ -13,6 +13,27 @@ public class Judge {
 	public Judge(MindBord mindBord) {
 		this.mindBord=mindBord;
 	}
+	protected boolean victoryOrDefeat(int x, int y, boolean br) {
+		int storn = br ? 0 : 1;
+		int count[]={0,0};
+		out: for (int i = 1; i <= 8; i++) {
+			count[0]=0;
+			for (int j = 1; j < 5; j++) {
+				
+				if (sarch(x, y, j, i)[0] == storn && j == 4-count[1]) {
+					return true;
+				} else if (sarch(x, y, j, i)[0] == storn) {
+					count[0]++;
+				} else {
+					count[1]=i%2==0?0:count[0];
+					count[0]=0;
+					continue out;
+				}
+			}
+		}
+
+		return false;
+	}
 	protected int[] ifThree(int x, int y, boolean br, int l) {
 		int storn = br ? 0 : 1;
 		int count[] = { 0, 0 };

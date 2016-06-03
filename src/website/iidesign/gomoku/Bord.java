@@ -1,7 +1,10 @@
 package website.iidesign.gomoku;
 
+import java.io.IOException;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import website.iidesign.csvFileMaker.CsvFileMaker;
 
 public class Bord {
 
@@ -10,13 +13,18 @@ public class Bord {
 	public final int SIZE = 20;
 	public final boolean IRON = false;
 	public final boolean INITIATIVE = true;
-	private boolean count = INITIATIVE;
-	public static int bord[][];
+	protected boolean count = INITIATIVE;
+	protected int mindBord[][];
+	protected static int bord[][];
 	private GraphicsContext gc;
-
+	
+	static CsvFileMaker csvMake;
+	public Bord() {		
+	}
 	public Bord(GraphicsContext gc) {
+		csvMake=new CsvFileMaker("log","log");
 		this.gc = gc;
-		bord = new int[X][Y];
+		Bord.bord = new int[X][Y];
 		init();
 		strokeLine();
 	}
@@ -24,9 +32,14 @@ public class Bord {
 	private void init() {
 		for (int i = 0; i < X; i++) {
 			for (int j = 0; j < Y; j++)
-				bord[i][j] = -1;
+				Bord.bord[i][j] = -1;
 		}
 		gc.clearRect(0, 0, 1000, 1000);
+		try {
+			setLog("START"+"\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void strokeLine() {
@@ -47,34 +60,48 @@ public class Bord {
 		gc.fillOval(x * SIZE, y * SIZE, SIZE, SIZE);
 	}
 	
-	public static int sarch(int x, int y, int val, int pt) {
+	private void setLog(String value) throws IOException{
+		csvMake.writeFile(value);
+	}
+	public void endLog() throws IOException{
+		setLog("END"+"\n\n");
+	}
+	
+	public int sarch(int x, int y, int val, int pt) {
 		switch (pt) {
 		case 1:
-			return Bord.getStorn(x + val, y);
+			return this.getStorn(x + val, y);
 		case 2:
-			return Bord.getStorn(x - val, y);
+			return this.getStorn(x - val, y);
 		case 3:
-			return Bord.getStorn(x + val, y + val);
+			return this.getStorn(x + val, y + val);
 		case 4:
-			return Bord.getStorn(x - val, y - val);
+			return this.getStorn(x - val, y - val);
 		case 5:
-			return Bord.getStorn(x + val, y - val);
+			return this.getStorn(x + val, y - val);
 		case 6:
-			return Bord.getStorn(x - val, y + val);
+			return this.getStorn(x - val, y + val);
 		case 7:
-			return Bord.getStorn(x, y + val);
+			return this.getStorn(x, y + val);
 		case 8:
-			return Bord.getStorn(x, y - val);
+			return this.getStorn(x, y - val);
 		default:
 			return -1;
 		}
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
+		int stone;
 		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br) { //&& Shinpan.ifFoul(x, y, br)!=-1) {
 
 			this.drowBord(x, y, br);
-			Bord.bord[x][y] = br ? 0 : 1;
+			stone=br ? 0 : 1;
+			Bord.bord[x][y] = stone;
+			try {
+				setLog(String.valueOf(stone)+','+String.valueOf(x)+','+String.valueOf(y)+"\n");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			count = !br;
 			return true;
 		} else {
@@ -90,10 +117,11 @@ public class Bord {
 		}
 	}
 
-	public static int getStorn(int x, int y) {
+	public int getStorn(int x, int y) {
 		if (x < 0 || X <= x || y < 0 || X <= y)
 			return -2;
 		return Bord.bord[x][y];
 	}
+	
 
 }

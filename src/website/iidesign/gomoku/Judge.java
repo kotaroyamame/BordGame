@@ -48,10 +48,10 @@ public class Judge {
 					if (this.sarch(x, y, j + 1, i)[0] == -1 && this.sarch(x, y, 0, i)[0] == -1) {// nこ並んでなおかつ両端が開いている場合。
 						if (count[1] == 0)
 							xyList.add(new int[] { this.sarch(x, y, j + 1, i)[0], this.sarch(x, y, j + 1, i)[1],
-							    this.sarch(x, y, j + 1, i)[2], 4 });
+							    this.sarch(x, y, j + 1, i)[2], 9 });
 						else
 							xyList.add(
-							    new int[] { this.sarch(x, y, 0, i)[0], this.sarch(x, y, 0, i)[1], this.sarch(x, y, 0, i)[2], 5 });
+							    new int[] { this.sarch(x, y, 0, i)[0], this.sarch(x, y, 0, i)[1], this.sarch(x, y, 0, i)[2], 10 });
 
 					} else if (this.sarch(x, y, j + 1, i)[0] == -1) {
 
@@ -99,6 +99,9 @@ public class Judge {
 		default:
 			return new int[] { -2, 0, 0 };
 		}
+	}
+	protected int centerDistance(int x, int y){
+		return Math.abs(7-x)+Math.abs(7-y);
 	}
 	protected int[] getAiStoneBlank(int e, int i) {
 		// System.out.println(e);

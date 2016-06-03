@@ -85,14 +85,14 @@ public class Computer extends Judge {
 		ArrayList<int[]> humanPoint = new ArrayList<int[]>();
 		//現在先手の予想の際に禁じ手を考慮していないので後で実装する
 		int[][] patten={
-				{30,25,131,60,20,15,25,6},//優先順位  {相手の四を止める,相手の三を止める,自分の五を打つ,自分の四を打つ,自分の三を打つ,自分の二を打つ,自分の三三を打つ,相手の三三を止める}
-				{30,25,131,60,20,15,25,6},
-				{30,25,131,60,20,15,25,6},
-				{30,25,131,60,20,15,25,6},
-				{30,25,131,60,20,15,25,6},
-				{30,25,131,60,20,15,25,6},
-				{30,25,131,60,20,15,25,6},
-				{30,25,131,60,20,15,25,6}
+				{70,25,131,60,23,15,30,6},//優先順位  {相手の四を止める,相手の三を止める,自分の五を打つ,自分の四を打つ,自分の三を打つ,自分の二を打つ,自分の三三を打つ,相手の三三を止める}
+				{70,25,131,60,20,15,30,6},
+				{70,25,131,60,17,15,30,6},
+				{70,25,131,60,20,15,25,6},
+				{70,25,131,60,20,15,25,6},
+				{70,25,131,60,20,15,25,6},
+				{70,25,131,60,20,15,25,6},
+				{70,25,131,60,20,15,25,6}
 		};
 		//pointData{index(p),相手ポイントの合計,AIポイントの合計,次の手のx座標,次の手のx座標}*patten.length
 		int[][] pointData=new int[patten.length][5];
@@ -149,40 +149,48 @@ public class Computer extends Judge {
 						}
 					}
 				}
-				// 上の条件がなかったら自分のおいた石の八方の開いているところにランダムに打つ
-				out: for (int i = 0; i < aiStone.size(); i++) {
+				// 上の条件がなかったら中心に近い自分のおいた石の八方の開いているところに打つ
+				ArrayList<int[]> centerDis=new ArrayList<int[]>();
+				if(0<aiStone.size()){
+				for (int i = 0; i < aiStone.size(); i++) {
 	
 					int[] xy;
-					int count = 0;
-					do {
-						xy = this.getAiStoneBlank((int) Math.floor(Math.random() * 8), i);
-						count++;
-						if (count > 3)
-							continue out;
-					} while (!isBlank(xy));
-	
-					// System.out.println(xy[0] + " " + xy[1]);
-	
-					xyList.add(new int[] { xy[0], xy[1], i0%2==0?2:3 });
-	
+					int j=0;
+					
+					while (j<8){
+						xy=this.getAiStoneBlank(j, i);
+						if(isBlank(xy)){
+							centerDis.add(new int[]{xy[0],xy[1],centerDistance(xy[0],xy[1])});
+						};
+						j++;
+					}
+					
 				}
-	
-				out: for (int i3 = 0; i3 < humanStone.size(); i3++) {
-//	System.out.println("humanStone"+humanStone.size());
+				Collections.sort(centerDis, new CompM(2));
+				
+				xyList.add(new int[] { centerDis.get(0)[0], centerDis.get(0)[1], i0%2==0?2:3 });
+				centerDis.clear();
+				}
+				if(0<humanStone.size()){
+				for (int i = 0; i < humanStone.size(); i++) {
+					
 					int[] xy;
-					int count = 0;
-					do {
-						xy = getHumanStoneBlank((int) Math.floor(Math.random() * 8), i3);
-						count++;
-						if (count > 3)
-							continue out;
-					} while (!isBlank(xy));
-	
-					// System.out.println(xy[0] + " " + xy[1]);
-	
-					xyList.add(new int[] { xy[0], xy[1], i0%2==0?3:2 });
-	
+					int j=0;
+					
+					while (j<8){
+						xy=this.getHumanStoneBlank(j, i);
+						if(isBlank(xy)){
+							centerDis.add(new int[]{xy[0],xy[1],centerDistance(xy[0],xy[1])});
+						};
+						j++;
+					}
+					
 				}
+				Collections.sort(centerDis, new CompM(2));
+				xyList.add(new int[] { centerDis.get(0)[0], centerDis.get(0)[1], i0%2==0?3:2 });
+				centerDis.clear();
+				}
+				
 				if (xyList.isEmpty()){
 					int i9=0;
 					for(;;){

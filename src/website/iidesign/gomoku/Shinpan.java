@@ -111,7 +111,7 @@ public class Shinpan {
 
 	public boolean hantei(int x, int y, boolean br) {
 
-		int storn = br ? 0 : 1;
+//		int storn = br ? 0 : 1;
 		if (victoryOrDefeat(x, y, br)){
 			try {
 				bord.endLog();

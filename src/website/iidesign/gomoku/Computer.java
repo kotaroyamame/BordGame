@@ -144,6 +144,7 @@ public class Computer extends Judge {
 						if (threeThree(i1, j1, i0%2==0?human:ai)[0] == -1) {
 							System.out.println("自分の三三"+"x="+i1+"y="+ j1);
 							xyList.add(new int[] { i1, j1, patten[p][6] });
+							if((i0%2==0?human:ai)==ai)
 							for(int k0=0;k0<patten.length;k0++){
 								patten[k0][3]=100;
 								patten[k0][4]=60;
@@ -159,6 +160,7 @@ public class Computer extends Judge {
 						if (threeFore(i1, j1, i0%2==0?ai:human)[0] == -1) {
 							System.out.println("相手の四三を止める"+"x="+i1+"y="+ j1+"==========================================");
 							xyList.add(new int[] { i1, j1, patten[p][7] });
+							if((i0%2==0?human:ai)==ai)
 							for(int k0=0;k0<patten.length;k0++){
 								patten[k0][3]=150;
 								patten[k0][4]=130;

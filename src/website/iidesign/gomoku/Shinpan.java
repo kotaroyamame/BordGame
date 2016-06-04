@@ -40,6 +40,29 @@ public class Shinpan  extends Judge{
 		if(this.threethreeFaol( x,  y, br))return 0;
 		return -1;
 	}
+	
+	protected int[] sarch(int x, int y, int val, int pt) {
+		switch (pt) {
+		case 1:
+			return new int[] { bord.getStorn(x + val, y), x + val, y };
+		case 2:
+			return new int[] { bord.getStorn(x - val, y), x - val, y };
+		case 3:
+			return new int[] { bord.getStorn(x + val, y + val), x + val, y + val };
+		case 4:
+			return new int[] { bord.getStorn(x - val, y - val), x - val, y - val };
+		case 5:
+			return new int[] { bord.getStorn(x + val, y - val), x + val, y - val };
+		case 6:
+			return new int[] { bord.getStorn(x - val, y + val), x - val, y + val };
+		case 7:
+			return new int[] { bord.getStorn(x, y + val), x, y + val };
+		case 8:
+			return new int[] { bord.getStorn(x, y - val), x, y - val };
+		default:
+			return new int[] { -2, 0, 0 };
+		}
+	}
 
 	public boolean hantei(int x, int y, boolean br) {
 

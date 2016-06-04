@@ -3,13 +3,15 @@ package website.iidesign.gomoku;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Judge {
-	MindBord mindBord;
+public class Judge{
+	protected MindBord mindBord;
 	
 	protected ArrayList<int[]> aiStone = new ArrayList<int[]>();
 	protected ArrayList<int[]> humanStone = new ArrayList<int[]>();
 	protected ArrayList<int[]> brankList = new ArrayList<int[]>();
+	public Judge() {
 
+	}
 	public Judge(MindBord mindBord) {
 		this.mindBord=mindBord;
 	}
@@ -27,6 +29,50 @@ public class Judge {
 				} else {
 					count[1]=i%2==0?0:count[0];
 					count[0]=0;
+					continue out;
+				}
+			}
+		}
+
+		return false;
+	}
+	
+	protected boolean threethreeFaol(int x, int y, boolean br) {
+		int storn = br ? 0 : 1;
+		int[][] count={{0,0},{0,0}};//{{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}
+		boolean flag=false;
+		out: for (int i = 1; i <= 8; i++) {
+			
+			count[0][0]=0;
+			count[1][0]=0;
+			int k=0;
+			for (int j = 1; j < 3+k; j++) {
+				
+				if (sarch(x, y, j, i)[0] == storn && j == (2+k)-count[0][1]&& sarch(x, y, j+1, i)[0] ==-1 && sarch(x, y, 0, i)[0] ==-1) {
+					if(count[0][1]==0){	
+						if(flag){
+							flag=false;
+							return true;
+						}
+						flag=true;
+					}else if(sarch(x, y, -j-1, i)[0] ==-1){
+						if(flag){
+							flag=false;
+							return true;
+						}
+						flag=true;
+					}
+					
+					
+					
+				} else if (sarch(x, y, j, i)[0] == storn) {
+					count[0][0]++;
+				}else if (sarch(x, y, j, i)[0] == -1&&count[1][0]<1){//飛び石三
+					count[1][0]++;
+					k=1;
+				} else {
+					count[0][1]=i%2==0?0:count[0][0];
+					count[0][0]=0;
 					continue out;
 				}
 			}
@@ -403,6 +449,54 @@ public class Judge {
 		
 		return new int[] { -2, 0, 0 };
 	}
+	
+	protected int[] fourFour(int x, int y, boolean br) {
+		int storn = br ? 0 : 1;
+		int[][] count = { { 0, 0 }, { 0, 0 } };// {{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}
+		boolean flag = false;
+		// ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
+		if(mindBord.isBlank(x, y)){
+			return new int[] { -2, 0, 0 };
+		}
+		out: for (int i = 1; i <= 8; i++) {
+
+			count[0][0] = 0;
+			count[1][0] = 0;
+			int k = 0;
+			for (int j = 1; j < 4 + k; j++) {
+
+				if (mindBord.sarchMind(x, y, j, i) == storn && j == (3 + k) - count[0][1] && mindBord.sarchMind(x, y, j + 1+k, i) == -1
+				    && mindBord.sarchMind(x, y, 0, i) == -1) {
+					if (count[0][1] == 0) {
+						if (flag) {
+							flag = false;
+							return new int[] { -1, x, y };
+						}
+						flag = true;
+					} else if (mindBord.sarchMind(x, y, -j - 1, i) == -1) {
+						if (flag) {
+							flag = false;
+							return new int[] { -1, x, y };
+						}
+						flag = true;
+					}
+
+				} else if (mindBord.sarchMind(x, y, j, i) == storn) {
+					count[0][0]++;
+				} else if (mindBord.sarchMind(x, y, j, i) == -1 && count[1][0] < 1) {// 飛び石三
+					count[1][0]++;
+					k = 1;
+				} else {
+					count[0][1] = i % 2 == 0 ? 0 : count[0][0];
+					count[0][0] = 0;
+					continue out;
+				}
+			}
+		}
+
+		return new int[] { -2, 0, 0 };
+	}
+	
 	protected int[] threeThree(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
 		int[][] count = { { 0, 0 }, { 0, 0 } };// {{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}

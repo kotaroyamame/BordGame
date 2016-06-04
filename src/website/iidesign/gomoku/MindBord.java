@@ -64,10 +64,17 @@ public class MindBord extends Bord{
 	}
 
 	public boolean isStorn(int x, int y) {
-		if (x < X && y < Y && Bord.bord[x][y] != -1) {
+		if (x < X && y < Y && mindBord[x][y] != -1) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	public boolean isBlank(int x, int y) {
+		if (x < X && y < Y && 0<X && 0 < Y &&mindBord[x][y] == -1) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 

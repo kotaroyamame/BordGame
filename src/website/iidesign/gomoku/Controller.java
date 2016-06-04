@@ -62,7 +62,9 @@ public class Controller implements Initializable {
 				}
 			}
 		}else if(shinpan.ifFoul(_x, _y, true)==0){
-			text1.setText("先手の三々は反則です");
+			text1.setText("先手の三三は反則です");
+		}else if(shinpan.ifFoul(_x, _y, true)==1){
+			text1.setText("先手の四四は反則です");
 		}
 		if (finish)
 			return;

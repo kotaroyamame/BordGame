@@ -38,6 +38,7 @@ public class Shinpan  extends Judge{
 	public int ifFoul(int x, int y, boolean br){
 		//ここに禁じて判定
 		if(this.threethreeFaol( x,  y, br))return 0;
+		if(this.fourfourFaol( x,  y, br))return 1;
 		return -1;
 	}
 	

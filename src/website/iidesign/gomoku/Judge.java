@@ -293,10 +293,18 @@ public class Judge {
 			int k = 0;
 			for (int j = 1; j < 3 + k; j++) {
 
-				if (mindBord.sarchMind(x, y, j, i) == storn && j == (2 + k) - count[0][1] 
+				if 
+				(
+						mindBord.sarchMind(x, y, j, i) == storn && j == (2 + k) - count[0][1] 
 						&&
-						((k != 0&&(mindBord.sarchMind(x, y, j+k, i) == -1 && mindBord.sarchMind(x, y, -j-k, i) == -1))
-								|| (k == 0&&(mindBord.sarchMind(x, y, 0, i) == -1 && mindBord.sarchMind(x, y, j + k, i)== -1)))){
+						(
+								(k != 0&&(mindBord.sarchMind(x, y, j+k, i) == -1 && mindBord.sarchMind(x, y, -j-k, i) == -1))
+								|| 
+								(k == 0&&mindBord.sarchMind(x, y, j + k, i)== -1)
+								|| 
+								(k == 0&&count[0][1]!=0&&(mindBord.sarchMind(x, y, -(j + 1), i) == -1 && mindBord.sarchMind(x, y, j + 1, i)== -1))
+						)
+				){
 					
 					if (k == 0) {
 						count[1][1]=1;

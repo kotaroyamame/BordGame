@@ -2,9 +2,11 @@ package website.iidesign.gomoku;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import website.iidesign.csvFileMaker.CsvFileMaker;
 
@@ -16,9 +18,61 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 	public Logs() {
 		fileMaker=new CsvFileMaker("log","log");
 	}
+	private void set(){
+		ArrayList<String> stringList=new ArrayList<String>();
+		stringList.addAll(fileMaker.getTextList());
+		String date="";
+//		this.clear();
+		int i=0;
+		outout:while(i<stringList.size()){
+			HashMap<String, int[][]> hashmap=new HashMap<String,int[][]>();
+			if(stringList.get(i).matches("DATA__.+")){
+				date=stringList.get(i);
+				i++;
+			
+				
+				out:while(stringList.get(i).matches(".+teme")){
+					String key=stringList.get(i).split(",")[1];
+					System.out.println(key);
+					i++;
+					int[][] bord=new int[Bord.X][Bord.Y];
+					for(int j=0;j<Bord.Y;j++){
+						for(int k=0;k<Bord.X;k++){
+							bord[j][k]= Integer.parseInt(stringList.get(i).split(",")[k+2]);
+						}
+					i++;
+					}
+					i--;
+					hashmap.put(key, bord);
+//					System.out.println("stringListSIze"+stringList.size());
+//					System.out.println("put"+key);
+					if(i>=stringList.size() ){
+						System.out.println("put"+date);
+						this.put(date, hashmap);
+						break outout;
+					}
+					while(!stringList.get(i).matches(".+teme")&&!stringList.get(i).matches("DATA__.+")){
+						System.out.println("noMatch" +i);
+						i++;
+						if(i>=stringList.size()){
+							System.out.println("put"+date);
+							this.put(date, hashmap);
+							break outout;
+						}
+//						else if(stringList.get(i).matches("DATA__.+")){
+//							break out;
+//						}
+					}
+				}
+				System.out.println("put"+date);
+				this.put(date, hashmap);
+			}
+			i++;
+		}
+	}
 	public void fetch() throws IOException{
 		//ここにcsvファイルからgetする処理
-
+		set();
 //		System.out.println(log.get("2手目")[0][0]);
 		StringBuffer br = new StringBuffer();
 		

@@ -283,7 +283,7 @@ public class Judge {
 		int storn = br ? 0 : 1;
 		int[][] count = { { 0, 0 }, { 0, 0 } };// {{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}
 		// ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
-		if(mindBord.isBlank(x, y)||(ifNomalThree(x,y,br)[0]!=-2||ifJunpThree(x,y,br)[0]!=-2)){
+		if(!mindBord.isBlank(x, y)||(ifNomalThree(x,y,br)[0]!=-2||ifJunpThree(x,y,br)[0]!=-2)){
 			return new int[] { -2, 0, 0 };
 		}
 		if(ifNomalFore(x,y,br)[0]==-1||ifJunpFore(x,y,br)[0]==-1){

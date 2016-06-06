@@ -76,6 +76,7 @@ public class Computer extends Judge {
 
 	public int[] isRen(int l) {//最終的には最適なxy値を返す
 		int anticipate=1;//先読みの手数
+		boolean forThreeFlag=false;
 		
 		if(10<COUNT){
 			anticipate=2;
@@ -101,14 +102,15 @@ public class Computer extends Judge {
 			mindBord.sysncMindBord();//仮想ボードを現実のボートと同期
 			aiPoint.clear();
 			humanPoint.clear();
+			forThreeFlag=false;
 			for (int i0 = 1; i0 <= anticipate; i0++) {
-				patten=new int[][]{
-						{110,76,231,60,12,5,55,95},//優先順位  {相手の四を止める,相手の三を止める,自分の五を打つ,自分の四を打つ,自分の三を打つ,自分の二を打つ,自分の三三を打つ,自分の四三を打つ}
-						{110,76,231,60,12,5,55,95},
-						{110,76,231,60,12,5,55,95},
-						{110,76,231,60,12,5,55,95},
-						{110,76,231,60,12,5,55,95},
-				};
+				if(forThreeFlag){
+					for(int m0=0;m0<patten.length;m0++){
+						patten[m0][3]=200;
+						patten[m0][4]=180;
+						patten[m0][5]=100;
+					}
+				}
 				xyList.clear();
 				// 人の3つ揃った石を検索
 				for (int i1 = 0; i1 < Bord.X; i1++) {
@@ -146,11 +148,11 @@ public class Computer extends Judge {
 						if (threeFore(i1, j1, i0%2==0?human:ai)[0] == -1) {
 							System.out.println("自分の四三"+"x="+i1+"y="+ j1+"==========================================");
 							xyList.add(new int[] { i1, j1, patten[p][7] });
-							for(int m0=0;m0<patten.length;m0++){
-								patten[m0][3]=200;
-								patten[m0][4]=180;
-								patten[m0][3]=100;
-							}
+							forThreeFlag=true;
+						}
+						if (threeFore(i1, j1, i0%2==0?ai:human)[0] == -1) {
+							System.out.println("相手の四三を止める"+"x="+i1+"y="+ j1+"==========================================");
+							xyList.add(new int[] { i1, j1, patten[p][7] });
 	
 						}
 						if (this.ifThree(i1, j1, i0%2==0?human:ai, 3)[0] == -1) {

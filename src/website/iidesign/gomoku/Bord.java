@@ -74,10 +74,11 @@ public class Bord {
 	}
 	public void endLog() throws IOException{
 //    Calendar c = Calendar.getInstance();
+		String maker="DATA__";
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM/dd/ HH:mm ss");
 
-		logs.put(sdf.format(Calendar.getInstance().getTime()), (HashMap<String, int[][]>) log);
+		logs.put(maker+sdf.format(Calendar.getInstance().getTime()), (HashMap<String, int[][]>) log);
 		((Logs) logs).fetch();
 	}
 	

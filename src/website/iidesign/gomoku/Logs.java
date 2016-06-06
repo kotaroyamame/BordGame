@@ -2,7 +2,6 @@ package website.iidesign.gomoku;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -64,8 +63,9 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 //						}
 					}
 				}
-				System.out.println("put"+date);
+				System.out.println("putend"+date);
 				this.put(date, hashmap);
+				i--;
 			}
 			i++;
 		}
@@ -80,7 +80,7 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 		
 		Collections.sort(sortedKeys);
 		
-		br.append("\n");
+//		br.append("\n");
 		for(String entry : sortedKeys) {
 			br.append(entry+"\n");
 			List<String> sortedKeys2 = new ArrayList<String>(this.get(entry).keySet());

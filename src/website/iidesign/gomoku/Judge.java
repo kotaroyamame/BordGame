@@ -280,13 +280,17 @@ public class Judge {
 	}
 
 	protected int[] threeFore(int x, int y, boolean br) {
-		int storn = br ? 0 : 1;
-		int[][] count = { { 0, 0 }, { 0, 0 } };// {{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}
-		// ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
-		if(!mindBord.isBlank(x, y)||(ifNomalThree(x,y,br)[0]!=-2||ifJunpThree(x,y,br)[0]!=-2)){
+
+		if(mindBord.isBlank(x, y)||(ifNomalThree(x,y,br)[0]==-2&&ifJunpThree(x,y,br)[0]==-2)){
+			
 			return new int[] { -2, 0, 0 };
 		}
+		System.out.println("ifNomalThree");
+		System.out.println(ifNomalThree(x,y,br)[0]);
+		System.out.println("ifJunpThree");
+		System.out.println(ifJunpThree(x,y,br)[0]);
 		if(ifNomalFore(x,y,br)[0]==-1||ifJunpFore(x,y,br)[0]==-1){
+			
 			return new int[] { -1, x, y };
 		}
 		
@@ -304,11 +308,27 @@ public class Judge {
 		
 		for (int i = 1; i <= 8; i++) {
 			int j=1;
-			if (mindBord.sarchMind(x, y, j, i) == storn&&mindBord.sarchMind(x, y, j, i) == -1){
-				if(count[1]!=0){
+			if (mindBord.sarchMind(x, y, j, i) == storn&&mindBord.sarchMind(x, y, j+1, i) == -1){
+				if(count[1]==1){
 					return new int[] { -1, x, y };
 				}
-				count[1] = i % 2 == 0 ? 0 : count[0];
+				count[0]=1;
+			}
+			count[1] = i % 2 == 0 ? 0 : count[0];	
+		}
+		
+		count = new int[]{ 0, 0};
+		out:for (int i = 1; i <= 8; i++) {
+			for (int j = 1; j <= 3; j++) {
+				if (mindBord.sarchMind(x, y, j, i) == -1){
+					count[0]++;
+				}
+				
+				if (mindBord.sarchMind(x, y, j, i) == storn&&mindBord.sarchMind(x, y, j+1, i) == -1&&j == 3&&count[0]==1){
+						return new int[] { -1, x, y };
+				}else if(mindBord.sarchMind(x, y, j, i) != storn){
+					continue out;
+				}
 			}
 				
 		}
@@ -317,18 +337,17 @@ public class Judge {
 	}
 	private int[] ifNomalThree(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
-		int[] count = {  0, 0  };
+
 		if(mindBord.isBlank(x, y)){
 			return new int[] { -2, 0, 0 };
 		}
 		
 		out:for (int i = 1; i <= 8; i++) {
 			for (int j = 1; j <= 2; j++) {
-				if (mindBord.sarchMind(x, y, j, i) == storn&&mindBord.sarchMind(x, y, j+1, i) == -1){
-					if(count[1]!=0){
+				if (mindBord.sarchMind(x, y, j, i) == storn&&j==2){
+					if(mindBord.sarchMind(x, y, j+1, i) == -1)
 						return new int[] { -1, x, y };
-					}
-					count[1] = i % 2 == 0 ? 0 : count[0];
+
 				}else if(mindBord.sarchMind(x, y, j, i) != storn){
 					continue out;
 				}
@@ -340,16 +359,20 @@ public class Judge {
 	}
 	private int[] ifNomalFore(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
+		int otherStorn=br ? 1 : 0;
 		if(mindBord.isBlank(x, y)){
 			return new int[] { -2, 0, 0 };
 		}
 		
 		out:for (int i = 1; i <= 8; i++) {
+			if(mindBord.sarchMind(x, y, -1, i) == otherStorn){
+				continue out;
+			}
 			for (int j = 1; j <= 3; j++) {
-				if (mindBord.sarchMind(x, y, j, i) == storn&&j <= 3){
+				if (mindBord.sarchMind(x, y, j, i) == storn&&j == 3){
 						return new int[] { -1, x, y };
 				}else if(mindBord.sarchMind(x, y, j, i) != storn){
-					continue out;
+					break;
 				}
 			}
 				
@@ -360,17 +383,16 @@ public class Judge {
 	
 	private int[] ifJunpFore(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
+		int count=0;
 		if(mindBord.isBlank(x, y)){
 			return new int[] { -2, 0, 0 };
 		}
 		
 		out:for (int i = 1; i <= 8; i++) {
 			for (int j = 1; j <= 4; j++) {
-				if (!(mindBord.sarchMind(x, y, j, i) == -1 && j == 1)){
-					continue out;
-				}
-				
-				if (mindBord.sarchMind(x, y, j, i) == storn&&j == 4){
+				if (mindBord.sarchMind(x, y, j, i) == -1){
+					count++;
+				}else if (mindBord.sarchMind(x, y, j, i) == storn&&j == 4&&count==1){
 						return new int[] { -1, x, y };
 				}else if(mindBord.sarchMind(x, y, j, i) != storn){
 					continue out;

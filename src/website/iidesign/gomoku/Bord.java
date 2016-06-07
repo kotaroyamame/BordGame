@@ -72,13 +72,13 @@ public class Bord {
 	private void setLog(String value) throws IOException{
 		((Logs) logs).fetch();
 	}
-	public void endLog() throws IOException{
+	public void endLog(String st) throws IOException{
 //    Calendar c = Calendar.getInstance();
 		String maker="DATA__";
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM/dd/ HH:mm ss");
 
-		logs.put(maker+sdf.format(Calendar.getInstance().getTime()), (HashMap<String, int[][]>) log);
+		logs.put(maker+sdf.format(Calendar.getInstance().getTime())+st, (HashMap<String, int[][]>) log);
 		((Logs) logs).fetch();
 	}
 	

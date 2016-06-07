@@ -110,6 +110,12 @@ public class Computer extends Judge {
 						patten[m0][4]=180;
 						patten[m0][5]=100;
 					}
+				}else{
+					for(int m0=0;m0<patten.length;m0++){
+						patten[m0][3]=60;
+						patten[m0][4]=12;
+						patten[m0][5]=5;
+					}
 				}
 				xyList.clear();
 				// 人の3つ揃った石を検索
@@ -149,6 +155,8 @@ public class Computer extends Judge {
 							System.out.println("自分の四三"+"x="+i1+"y="+ j1+"==========================================");
 							xyList.add(new int[] { i1, j1, patten[p][7] });
 							forThreeFlag=true;
+						}else{
+							forThreeFlag=false;
 						}
 						if (threeFore(i1, j1, i0%2==0?ai:human)[0] == -1) {
 							System.out.println("相手の四三を止める"+"x="+i1+"y="+ j1+"==========================================");

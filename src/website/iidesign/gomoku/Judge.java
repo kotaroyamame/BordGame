@@ -118,10 +118,10 @@ public class Judge {
 						System.out.println("両側空き"+"x="+x+"y="+ y);
 						if (count[0][1] == 0){
 							xyList.add(
-							    new int[] { this.sarch(x, y, 0, i)[0], this.sarch(x, y, 0, i)[1], this.sarch(x, y, 0, i)[2], 10 });
+							    new int[] { this.sarch(x, y, 0, i)[0], this.sarch(x, y, 0, i)[1], this.sarch(x, y, 0, i)[2], 16 });
 						}else
 							xyList.add(
-							    new int[] { this.sarch(x, y, 0, i)[0], this.sarch(x, y, 0, i)[1], this.sarch(x, y, 0, i)[2], 9 });
+							    new int[] { this.sarch(x, y, 0, i)[0], this.sarch(x, y, 0, i)[1], this.sarch(x, y, 0, i)[2], 15 });
 
 					} else if 
 						(

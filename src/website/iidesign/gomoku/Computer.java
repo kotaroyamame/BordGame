@@ -76,37 +76,47 @@ public class Computer extends Judge {
 
 	public int[] isRen(int l) {//最終的には最適なxy値を返す
 		int anticipate=1;//先読みの手数
+		boolean forThreeFlag=false;
 		
 		if(10<COUNT){
-			anticipate=4;
+			anticipate=2;
 		}
-		int p=0;
-		int p2=0;
 		ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
 		ArrayList<int[]> aiPoint = new ArrayList<int[]>();
 		ArrayList<int[]> humanPoint = new ArrayList<int[]>();
 		//現在先手の予想の際に禁じ手を考慮していないので後で実装する
 		int[][] patten={
-				{110,76,231,60,12,5,55,85},//優先順位  {相手の四を止める,相手の三を止める,自分の五を打つ,自分の四を打つ,自分の三を打つ,自分の二を打つ,自分の三三を打つ,自分の四三を打つ}
-				{110,76,231,60,12,5,55,85},
-				{110,76,231,60,12,5,55,85},
-				{110,76,231,60,12,5,55,85},
-				{110,76,231,60,12,5,55,85},
-				{110,76,231,60,12,5,55,85},
-				{110,76,231,60,12,5,55,85},
-				{110,76,231,60,12,5,55,85},
+				{110,76,231,60,12,5,55,95},//優先順位  {相手の四を止める,相手の三を止める,自分の五を打つ,自分の四を打つ,自分の三を打つ,自分の二を打つ,自分の三三を打つ,自分の四三を打つ}
+				{110,76,231,60,12,5,55,95},
+				{110,76,231,60,12,5,55,95},
+				{110,76,231,60,12,5,55,95},
+				{110,76,231,60,12,5,55,95},
 		};
 		//pointData{index(p),相手ポイントの合計,AIポイントの合計,次の手のx座標,次の手のx座標}*patten.length
-		ArrayList<int[]> pointData=new ArrayList<int[]>();
+		int[][] pointData=new int[patten.length][5];
 		// {駒の種類、x座標,y座標,優先順位}のリスト
 		// int[][] priority;
-		do{
+		for(int p = 0; p < patten.length; p++){
 			serchStone();
 			brankCells();
 			mindBord.sysncMindBord();//仮想ボードを現実のボートと同期
 			aiPoint.clear();
 			humanPoint.clear();
+			forThreeFlag=false;
 			for (int i0 = 1; i0 <= anticipate; i0++) {
+				if(forThreeFlag){
+					for(int m0=0;m0<patten.length;m0++){
+						patten[m0][3]=200;
+						patten[m0][4]=180;
+						patten[m0][5]=100;
+					}
+				}else{
+					for(int m0=0;m0<patten.length;m0++){
+						patten[m0][3]=60;
+						patten[m0][4]=12;
+						patten[m0][5]=5;
+					}
+				}
 				xyList.clear();
 				// 人の3つ揃った石を検索
 				for (int i1 = 0; i1 < Bord.X; i1++) {
@@ -115,50 +125,48 @@ public class Computer extends Judge {
 						if (this.ifThree(i1, j1, i0%2==0?ai:human, 4)[0] == -1) {
 							System.out.println("相手の四を止める"+"x="+i1+"y="+ j1);
 							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?ai:human, 4)[1], this.ifThree(i1, j1, i0%2==0?ai:human, 4)[2],
-							    this.ifThree(i1, j1, i0%2==0?ai:human, 4)[3] + patten[0][0] });
+							    this.ifThree(i1, j1, i0%2==0?ai:human, 4)[3] + patten[p][0] });
 						}
 						//3
 						if (this.ifThree(i1, j1, i0%2==0?ai:human)[0] == -1) {
 							System.out.println("相手の三を止める"+"x="+i1+"y="+ j1);
 							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?ai:human)[1], this.ifThree(i1, j1, i0%2==0?ai:human)[2],
-							    this.ifThree(i1, j1, i0%2==0?ai:human)[3] + patten[0][1] });
+							    this.ifThree(i1, j1, i0%2==0?ai:human)[3] + patten[p][1] });
 	
 						}
 
 						if (this.ifThree(i1, j1, i0%2==0?human:ai, 4)[0] == -1) {
 							System.out.println("自分の5を打つ"+"x="+i1+"y="+ j1);
 							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?human:ai,4)[1], this.ifThree(i1, j1, i0%2==0?human:ai, 4)[2],
-							    this.ifThree(i1, j1, i0%2==0?human:ai, 4)[3] +  patten[0][2]});
+							    this.ifThree(i1, j1, i0%2==0?human:ai, 4)[3] +  patten[p][2]});
 	
 						}
 						if (threeThree(i1, j1, i0%2==0?human:ai)[0] == -1) {
 							System.out.println("自分の三三"+"x="+i1+"y="+ j1);
-							xyList.add(new int[] { i1, j1, patten[0][6] });
-							if((i0%2==0?human:ai)==ai)
-							for(int k0=0;k0<patten.length;k0++){
-								patten[k0][3]=100;
-								patten[k0][4]=60;
-							}
+							xyList.add(new int[] { i1, j1, patten[p][6] });
+	
 						}
 						if (threeFore(i1, j1, i0%2==0?human:ai)[0] == -1) {
-							System.out.println("自分のしさん"+"x="+i1+"y="+ j1+"==========================================");
-							xyList.add(new int[] { i1, j1, patten[0][7] });
-							if((i0%2==0?human:ai)==ai)
-							for(int k0=0;k0<patten.length;k0++){
-								patten[k0][3]=150;
-								patten[k0][4]=130;
-							}
+							System.out.println("自分の四三"+"x="+i1+"y="+ j1+"==========================================");
+							xyList.add(new int[] { i1, j1, patten[p][7] });
+							forThreeFlag=true;
+						}else{
+							forThreeFlag=false;
+						}
+						if (threeFore(i1, j1, i0%2==0?ai:human)[0] == -1) {
+							System.out.println("相手の四三を止める"+"x="+i1+"y="+ j1+"==========================================");
+							xyList.add(new int[] { i1, j1, patten[p][7] });
 	
 						}
 						if (this.ifThree(i1, j1, i0%2==0?human:ai, 3)[0] == -1) {
 							System.out.println("自分の4を打つ"+"x="+i1+"y="+ j1);
 							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?human:ai, 3)[1], this.ifThree(i1, j1, i0%2==0?human:ai, 3)[2],
-							    this.ifThree(i1, j1, i0%2==0?human:ai, 3)[3] + patten[0][3] });
+							    this.ifThree(i1, j1, i0%2==0?human:ai, 3)[3] + patten[p][3] });
 	
 						}
 						if (this.ifThree(i1, j1, i0%2==0?human:ai, 2)[0] == -1) {
 							System.out.println("自分の3を打つ"+"x="+i1+"y="+ j1);
-							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?human:ai, 2)[1], this.ifThree(i1, j1, i0%2==0?human:ai, 2)[2], patten[0][4] });
+							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?human:ai, 2)[1], this.ifThree(i1, j1, i0%2==0?human:ai, 2)[2], patten[p][4] });
 	
 						}
 					}
@@ -181,9 +189,8 @@ public class Computer extends Judge {
 					
 				}
 				Collections.sort(centerDis, new CompM(2));
-				for(int l0=0;l0<centerDis.size();l0++)
-					xyList.add(new int[] { centerDis.get(l0)[0], centerDis.get(l0)[1], i0%2==0?centerDis.size()-l0:1+centerDis.size()-l0 });
 				
+				xyList.add(new int[] { centerDis.get(0)[0], centerDis.get(0)[1], i0%2==0?0:1 });
 				centerDis.clear();
 				}
 				if(0<humanStone.size()){
@@ -202,9 +209,7 @@ public class Computer extends Judge {
 					
 				}
 				Collections.sort(centerDis, new CompM(2));
-				for(int l0=0;l0<centerDis.size();l0++)
-					xyList.add(new int[] { centerDis.get(l0)[0], centerDis.get(l0)[1], i0%2==0?1+centerDis.size()-l0:centerDis.size()-l0 });
-				
+				xyList.add(new int[] { centerDis.get(0)[0], centerDis.get(0)[1], i0%2==0?1:0 });
 				centerDis.clear();
 				}
 				
@@ -221,29 +226,26 @@ public class Computer extends Judge {
 				//仮想ボードに石をセット
 	//			boolean currentHA=false;
 	//			currentHA=i0%2==0?ai:human;
-				if(p>=xyList.size()){
-					p=xyList.size()-1;
-				};
-				mindBord.setMindStorn(xyList.get(p)[0], xyList.get(p)[1], i0%2==0?ai:human);
+				mindBord.setMindStorn(xyList.get(p%xyList.size())[0], xyList.get(p%xyList.size())[1], i0%2==0?ai:human);
 				if(i0%2==0){
-					if(this.victoryOrDefeat(xyList.get(p)[0],xyList.get(p)[1],ai)){
-						humanPoint.add(new int[]{xyList.get(p)[0],xyList.get(p)[1],xyList.get(p)[2],10*(anticipate-i0)});
-					}else if(threeFore(xyList.get(p)[0], xyList.get(p)[1], ai)[0]==-1){
-						humanPoint.add(new int[]{xyList.get(p)[0],xyList.get(p)[1],xyList.get(p)[2],5*(anticipate-i0)});
+					if(this.victoryOrDefeat(xyList.get(0)[0],xyList.get(0)[1],ai)){
+						humanPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],10*(anticipate-i0)});
+					}else if(threeFore(xyList.get(0)[0], xyList.get(0)[1], ai)[0]==-1){
+						humanPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],5*(anticipate-i0)});
 					}else{
-						humanPoint.add(new int[]{xyList.get(p)[0],xyList.get(p)[1],xyList.get(p)[2],0});
+						humanPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],0});
 					}
 				}
 				else{
 					
-					if(this.victoryOrDefeat(xyList.get(p)[0],xyList.get(p)[1],ai)){
-						aiPoint.add(new int[]{xyList.get(0)[0],xyList.get(p)[1],xyList.get(p)[2],10*(anticipate-i0)});
-					}else if(threeFore(xyList.get(p)[0], xyList.get(0)[1], ai)[0]==-1){
-						aiPoint.add(new int[]{xyList.get(p)[0],xyList.get(p)[1],xyList.get(p)[2],5*(anticipate-i0)});
-					}else if(threeThree(xyList.get(p)[0], xyList.get(0)[1], ai)[0]==-1){
-						aiPoint.add(new int[]{xyList.get(p)[0],xyList.get(p)[1],xyList.get(p)[2],3*(anticipate-i0)});
+					if(this.victoryOrDefeat(xyList.get(0)[0],xyList.get(0)[1],ai)){
+						aiPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],10*(anticipate-i0)});
+					}else if(threeFore(xyList.get(0)[0], xyList.get(0)[1], ai)[0]==-1){
+						aiPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],5*(anticipate-i0)});
+					}else if(threeThree(xyList.get(0)[0], xyList.get(0)[1], ai)[0]==-1){
+						aiPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],3*(anticipate-i0)});
 					}else{
-						aiPoint.add(new int[]{xyList.get(p)[0],xyList.get(p)[1],xyList.get(p)[2],0});
+						aiPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],0});
 					}
 				}
 					
@@ -255,26 +257,37 @@ public class Computer extends Judge {
 			for(int j1=0;j1<aiPoint.size();j1++){
 				aiP=aiP+aiPoint.get(j1)[2]*(aiPoint.size()-j1);
 			}
-			pointData.add(new int[]{p,humanP,aiP,aiPoint.get(0)[0],aiPoint.get(0)[1]});
+			pointData[p][0]=p;
+			pointData[p][1]=humanP;
+			pointData[p][2]=aiP;
+			pointData[p][3]=aiPoint.get(0)[0];
+			pointData[p][4]=aiPoint.get(0)[1];
 //			System.out.println(aiPoint.get(0)[0]+" y "+aiPoint.get(0)[1]+"p"+p);
-		}while(++p<xyList.size()-4&&p2++<15*15);
-		
+		}
 		if(COUNT++==0)
-			return new int[]{pointData.get(0)[3],pointData.get(0)[4]};
+			return new int[]{pointData[3][3],pointData[3][4]};
 		//ここにポイントの大小で最適手の判定処理
 		
 		//まずは相手のポイントが低い順にソート
-		Collections.sort(pointData, new CompM(1));
+		Arrays.sort(pointData,new Comparator<int[]>(){
+			@Override
+			public int compare(int[] arg0, int[] arg1) {
+				return arg0[1]-arg1[1]>0?1:arg0[1]-arg1[1]==0?0:-1;
+			}});
 		
 	//次にAIのポイントが高い順にソート
-		Collections.sort(pointData, new Comp(2));
+		Arrays.sort(pointData,new Comparator<int[]>(){
+			@Override
+			public int compare(int[] arg0, int[] arg1) {
+				return arg0[2]-arg1[2]>0?-1:arg0[2]-arg1[2]==0?0:1;
+			}});
 		System.out.println("優先順位");
-		for (int ff = 0; ff <pointData.size() ; ff++) {
-			System.out.println("x"+pointData.get(ff)[3]+" y "+pointData.get(ff)[4]);
+		for (int ff = 0; ff <pointData.length ; ff++) {
+			System.out.println("x"+pointData[ff][3]+" y "+pointData[ff][4]);
 		}
 		
 		
-		return new int[]{pointData.get(0)[3],pointData.get(0)[4]};
+		return new int[]{pointData[0][3],pointData[0][4]};
 	}
 
 	public int[] setStorn() {

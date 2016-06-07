@@ -36,7 +36,49 @@ public class Judge{
 
 		return false;
 	}
-	
+	protected boolean fourfourFaol(int x, int y, boolean br) {
+		int storn = br ? 0 : 1;
+		int[][] count={{0,0},{0,0}};//{{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}
+		boolean flag=false;
+		out: for (int i = 1; i <= 8; i++) {
+			
+			count[0][0]=0;
+			count[1][0]=0;
+			int k=0;
+			for (int j = 1; j < 4+k; j++) {
+				
+				if (sarch(x, y, j, i)[0] == storn && j == (4+k)-count[0][1]&& sarch(x, y, j+1, i)[0] ==-1 && sarch(x, y, 0, i)[0] ==-1) {
+					if(count[0][1]==0){	
+						if(flag){
+							flag=false;
+							return true;
+						}
+						flag=true;
+					}else if(sarch(x, y, -j-1, i)[0] ==-1){
+						if(flag){
+							flag=false;
+							return true;
+						}
+						flag=true;
+					}
+					
+					
+					
+				} else if (sarch(x, y, j, i)[0] == storn) {
+					count[0][0]++;
+				}else if (sarch(x, y, j, i)[0] == -1&&count[1][0]<1){//飛び石三
+					count[1][0]++;
+					k=1;
+				} else {
+					count[0][1]=i%2==0?0:count[0][0];
+					count[0][0]=0;
+					continue out;
+				}
+			}
+		}
+
+		return false;
+	}
 	protected boolean threethreeFaol(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
 		int[][] count={{0,0},{0,0}};//{{三が出現した現在,過去ログ},{飛び石用現在,飛び石用過去ログ未使用}}

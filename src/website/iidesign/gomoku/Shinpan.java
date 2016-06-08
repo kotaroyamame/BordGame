@@ -14,9 +14,9 @@ public class Shinpan {
 		int count[]={0,0};
 		out: for (int i = 1; i <= 8; i++) {
 			count[0]=0;
-			for (int j = 1; j < 4; j++) {
+			for (int j = 1; j < 3; j++) {
 				
-				if (sarch(x, y, j, i) == storn && j == 3-count[1]) {
+				if (sarch(x, y, j, i) == storn && j == 2-count[1]) {
 					return true;
 				} else if (sarch(x, y, j, i) == storn) {
 					count[0]++;

@@ -51,7 +51,7 @@ public class Controller implements Initializable {
 	@FXML
 	public void onLearning() {
 		this.init();
-		for (int i = 0; i < 100;i++) {
+		for (int i = 0; i < 100000000;i++) {
 			out:for (;;) {
 				if (finish)
 					break out;

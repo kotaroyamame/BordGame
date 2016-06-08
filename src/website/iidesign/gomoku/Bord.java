@@ -22,15 +22,15 @@ public class Bord {
 	protected static int bord[][];
 	private GraphicsContext gc;
 	private static Map<String, int[][]> log;
-	private static Map<String, Log> logs;
-	private int te=0;
+	private static Logs logs;
+	private int tekazu=1;
 	
 	static CsvFileMaker csvMake;
 	public Bord() {		
 	}
 	public Bord(GraphicsContext gc) {
 		log=new Log();
-		logs=(Map<String, Log>) new Logs();
+		logs= new Logs();
 		csvMake=new CsvFileMaker("log","log");
 		this.gc = gc;
 		Bord.bord = new int[X][Y];
@@ -123,8 +123,8 @@ public class Bord {
 			}
 			_bord[Bord.X][0]=x;
 			_bord[Bord.X][1]=y;
-			log.put(String.format("%1$04d teme", ++te),_bord);
-			
+			log.put(String.format("%1$04d teme", tekazu),_bord);
+			++tekazu;
 //			try {
 //				setLog(String.valueOf(stone)+','+String.valueOf(x)+','+String.valueOf(y)+"\n");
 //			} catch (IOException e) {
@@ -152,7 +152,11 @@ public class Bord {
 	}
 	
 	public static Logs getLogs(){
-		return (Logs) logs;
+		return logs;
+	}
+	
+	public int getTekazu(){
+		return tekazu;
 	}
 	
 

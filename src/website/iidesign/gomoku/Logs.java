@@ -16,6 +16,15 @@ public class Logs extends HashMap<String,Log>{
 
 	public Logs() {
 		fileMaker=new CsvFileMaker("log","log");
+		init();
+	}
+	private void init(){
+		try {
+			this.fetch();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private void set(){
 		ArrayList<String> stringList=new ArrayList<String>();

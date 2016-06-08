@@ -1,6 +1,7 @@
 package website.iidesign.gomoku;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import website.iidesign.csvFileMaker.CsvFileMaker;
@@ -11,7 +12,7 @@ public class AI {
 	protected ArrayList<int[]> brankList = new ArrayList<int[]>();
 	private int bord[][];
 	
-	CsvFileMaker csvMake=new CsvFileMaker("log","aiLog");
+//	CsvFileMaker csvMake=new CsvFileMaker("log","aiLog");
 	public AI() {
 		this.mindBord=new MindBord();
 	}
@@ -41,24 +42,41 @@ public class AI {
 		int[][] returnInt;
 		List<int[]> handlePC=new ArrayList<int[]>();
 		List<int[]> secondPC=new ArrayList<int[]>();
+		List<String> sortedKeys = new ArrayList<String>(Bord.getLogs().keySet());
+		
+		Collections.sort(sortedKeys);
+		
+//		br.append("\n");
+//		for(String entry : sortedKeys) {
+		System.out.println("getLogs().size()");
+		System.out.println(Bord.getLogs().size());
 		while(count<5&&i<Bord.getLogs().size()-i2){
+			List<String> sortedKeys2 = new ArrayList<String>(Bord.getLogs().get(sortedKeys.get(i)).keySet());
 			
+			Collections.sort(sortedKeys2);
+			System.out.println("getLastOrFirst()");
+			System.out.println(Bord.getLogs().get(sortedKeys.get(i)).getLastOrFirst());
 			//自分の勝ちパターンなら
-			if(Bord.getLogs().get(i).getLastOrFirst()==(br?0:1)){
+			if(Bord.getLogs().get(sortedKeys.get(i)).getLastOrFirst()==(br?0:1)){
 			int sameCount=0;
+			if(sortedKeys2.size()>tesuu){
 			for(int j=0;j<Bord.X;j++)
 				for(int k=0;k<Bord.Y;k++){
-					if(bord[j][k]==Bord.getLogs().get(i).get(tesuu)[j][k]){
+					
+					if(bord[j][k]==Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[j][k]){
 						sameCount++;
 					}
+					
 				}
+			}
 		//一致率
 			if(sameCount/(Bord.X*Bord.Y)==100){
 				System.out.println("勝ちパターン一致率100");
-				handlePC.add(new int[]{Bord.getLogs().get(0).get(tesuu)[Bord.Y][0],Bord.getLogs().get(0).get(tesuu)[Bord.Y][1]});
+				handlePC.add(new int[]{Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][0],Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][1]});
 				count++;
-			}else if(sameCount/(Bord.X*Bord.Y)>95){
-				secondPC.add(new int[]{Bord.getLogs().get(0).get(tesuu)[Bord.Y][0],Bord.getLogs().get(0).get(tesuu)[Bord.Y][1]});
+			}else if(sameCount/(Bord.X*Bord.Y)>90){
+				System.out.println("勝ちパターン一致率90");
+				secondPC.add(new int[]{Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][0],Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][1]});
 			}
 			}else{
 				i2++;
@@ -66,6 +84,7 @@ public class AI {
 			
 			i++;
 		}
+//		}
 		
 		if(!handlePC.isEmpty()){
 			returnInt=new int[handlePC.size()][2];
@@ -94,14 +113,16 @@ public class AI {
 	}
 	
 	public int[] setStorn(int[][] bord,boolean br,int tesuu) {
-		int[] xy = serchPattern(bord,br,tesuu)[0];
+		int[][] xy = serchPattern(bord,br,tesuu);
 		if (xy != null) {
 //			System.out.println(xy[0]+" y "+xy[1]);
-			return new int[] { xy[0], xy[1] };
+			return new int[] { xy[0][0], xy[0][1] };
 		}
 		this.brankCells();
-		xy = brankList.get((int) Math.floor(Math.random() * brankList.size()));
-		return xy;
+		int[] _xy=brankList.get((int) Math.floor(Math.random() * brankList.size()));
+		xy=new int[1][2];
+		xy[0] = new int[]{_xy[0],_xy[1]};
+		return xy[0];
 	}
 
 }

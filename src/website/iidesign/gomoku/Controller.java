@@ -50,6 +50,7 @@ public class Controller implements Initializable {
 
 	@FXML
 	public void onLearning() {
+		this.init();
 		for (int i = 0; i < 20;i++) {
 			out:for (;;) {
 				if (finish)
@@ -100,7 +101,7 @@ public class Controller implements Initializable {
 			// ここまで人
 			if (finish)
 				return;
-			comRanch();
+			aiRanch();
 //		}
 	}
 

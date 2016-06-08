@@ -73,6 +73,7 @@ public class Bord {
 		((Logs) logs).fetch();
 	}
 	public void endLog(boolean br) throws IOException{
+		if(tekazu<40){
 		String storn = br ? "__LOS0" : "__WIN1";//0:先手勝利,1:後手勝利
 //    Calendar c = Calendar.getInstance();
 		String maker="DATA__";
@@ -83,6 +84,7 @@ public class Bord {
 
 		logs.put(maker+sdf.format(Calendar.getInstance().getTime())+storn, (Log) log);
 		((Logs) logs).fetch();
+		}
 	}
 	
 	public int sarch(int x, int y, int val, int pt) {

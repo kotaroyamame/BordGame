@@ -60,7 +60,7 @@ public class Controller implements Initializable {
 
 				if (finish)
 					return;
-				aiRanch();
+				comRanch();
 			}
 		this.init();
 		}

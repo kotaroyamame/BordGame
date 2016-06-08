@@ -100,4 +100,5 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 	}
 
 
+
 }

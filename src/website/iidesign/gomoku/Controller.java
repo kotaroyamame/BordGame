@@ -49,27 +49,31 @@ public class Controller implements Initializable {
 
 	@FXML
 	private void clickCanvas(MouseEvent e) {
+//		for(;;){
 		if (finish)
 			return;
 		int _x = (int) Math.floor(e.getX()) / bord.SIZE;
 		int _y = (int) Math.floor(e.getY()) / bord.SIZE;
-//		int hbr=shinpan.ifFoul(_x, _y, true);
-//		if(hbr==-1){
+		int hbr=shinpan.ifFoul(_x, _y, true);
+		if(hbr==-1){
 			text1.setText("あなたの番です");
-			aiRanch();
-//			boolean hSet=bord.setStorn(_x, _y, true);
-//			if (hSet){
-//				if (shinpan.hantei(_x, _y, true)) {
-//					text1.setText("あなたの勝ちです");
-//					finish = true;
-//				}
-//			}
-//		}else if(shinpan.ifFoul(_x, _y, true)==0){
-//			text1.setText("先手の三々は反則です");
-//		}
+			
+//			aiRanch();
+			
+			boolean hSet=bord.setStorn(_x, _y, true);
+			if (hSet){
+				if (shinpan.hantei(_x, _y, true)) {
+					text1.setText("あなたの勝ちです");
+					finish = true;
+				}
+			}
+		}else if(shinpan.ifFoul(_x, _y, true)==0){
+			text1.setText("先手の三々は反則です");
+		}
 		if (finish)
 			return;
-		aiRanch2();
+		comRanch();
+//		}
 	}
 	private void comRanch(){
 		int[] comStone = com.setStorn();

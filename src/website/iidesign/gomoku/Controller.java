@@ -51,9 +51,14 @@ public class Controller implements Initializable {
 	@FXML
 	public void onLearning() {
 		this.init();
-		for (int i = 0; i < 100000000;i++) {
+//		for (int i0 = 0; i0 < 2000000000;i0++)
+//		for (int i1 = 0; i1 < 2000000000;i1++)
+//		for (int i2 = 0; i2 < 2000000000;i2++)
+//		for (int i3 = 0; i3 < 2000000000;i3++)
+		for (int i = 0; i < 2000;i++) {
+			
 			out:for (;;) {
-				if (finish)
+				if (finish||bord.getTekazu()>1000)
 					break out;
 
 				aiRanch2();
@@ -68,6 +73,7 @@ public class Controller implements Initializable {
 
 	@FXML
 	private void clickCanvas(MouseEvent e) {
+		
 		// for(int i=0;i<20;i++){
 //		for (;;) {
 			if (finish)
@@ -99,9 +105,9 @@ public class Controller implements Initializable {
 			 }
 
 			// ここまで人
-			if (finish)
-				return;
-			aiRanch();
+			 if (finish)
+					return;
+				comRanch();
 //		}
 	}
 

@@ -12,9 +12,9 @@ import website.iidesign.csvFileMaker.CsvFileMaker;
 
 public class Bord {
 
-	public final static int X = 4;
-	public final static int Y = 4;
-	public final int SIZE = 50;
+	public final static int X = 15;
+	public final static int Y = 15;
+	public final int SIZE = 20;
 	public final boolean IRON = false;
 	public final boolean INITIATIVE = true;
 	protected boolean count = INITIATIVE;
@@ -73,7 +73,7 @@ public class Bord {
 		((Logs) logs).fetch();
 	}
 	public void endLog(boolean br) throws IOException{
-		if(tekazu<16){
+		if(tekazu<8){
 		String storn = br ? "__LOS0" : "__WIN1";//0:先手勝利,1:後手勝利
 //    Calendar c = Calendar.getInstance();
 		String maker="DATA__";

@@ -134,7 +134,7 @@ public class Shinpan {
 	public boolean hantei(int x, int y, boolean br) {
 
 		
-		if (victoryOrDefeatFour(x, y, br)){
+		if (victoryOrDefeat(x, y, br)){
 			try {
 				bord.endLog(br);
 			} catch (IOException e) {

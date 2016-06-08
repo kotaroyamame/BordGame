@@ -74,7 +74,7 @@ public class AI {
 				System.out.println("勝ちパターン一致率100");
 				handlePC.add(new int[]{Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][0],Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][1]});
 				count++;
-			}else if(sameCount/(Bord.X*Bord.Y)>80){
+			}else if(sameCount/(Bord.X*Bord.Y)>80&&false){
 				System.out.println("勝ちパターン一致率80");
 				secondPC.add(new int[]{Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][0],Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][1]});
 			}

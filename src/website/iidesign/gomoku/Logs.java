@@ -98,7 +98,15 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 		}
 		fileMaker.writeFile(String.valueOf(br.toString()),false);
 	}
-
+	/*
+	 * int[] serchPattern(int[][] bord,int tesuu)
+	//現在のボードの情報と何手目かを受け取り、個々の勝ちパターンのデータと比較して一致率が最も高いデータの一致率と
+	//、すべての打ちての座標を返す
+	*/
+	public int[] serchPattern(int[][] bord,int tesuu){
+		
+		return new int[]{0,0};
+	}
 
 
 }

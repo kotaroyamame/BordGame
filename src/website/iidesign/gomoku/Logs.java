@@ -9,7 +9,7 @@ import java.util.Map;
 
 import website.iidesign.csvFileMaker.CsvFileMaker;
 
-public class Logs extends HashMap<String,HashMap<String,int[][]>>{
+public class Logs extends HashMap<String,Log>{
 	
 	CsvFileMaker fileMaker;
 	private static final long serialVersionUID = 1L;
@@ -22,11 +22,13 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 		stringList.addAll(fileMaker.getTextList());
 		String date="";
 //		this.clear();
+		int winOrLost=0;
 		int i=0;
 		outout:while(i<stringList.size()){
-			HashMap<String, int[][]> hashmap=new HashMap<String,int[][]>();
+			Log hashmap=new Log();
 			if(stringList.get(i).matches("DATA__.+")){
-				date=stringList.get(i);
+				date=stringList.get(i).split(",")[0];
+				winOrLost=Integer.parseInt(stringList.get(i).split(",")[1]);
 				i++;
 			
 				
@@ -42,6 +44,7 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 					i++;
 					}
 					i--;
+					hashmap.setLastOrFirst(winOrLost);
 					hashmap.put(key, bord);
 //					System.out.println("stringListSIze"+stringList.size());
 //					System.out.println("put"+key);
@@ -82,7 +85,7 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 		
 //		br.append("\n");
 		for(String entry : sortedKeys) {
-			br.append(entry+"\n");
+			br.append(entry+","+String.valueOf(this.get(entry).getLastOrFirst())+"\n");
 			List<String> sortedKeys2 = new ArrayList<String>(this.get(entry).keySet());
 			Collections.sort(sortedKeys2);
 			for(String entry2 : sortedKeys2) {

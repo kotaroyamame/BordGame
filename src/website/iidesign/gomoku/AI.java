@@ -33,14 +33,18 @@ public class AI {
 		なお、ボード全体の一致率はパターンが膨大になるため、打った石の周囲10✕10の範囲の一致率を調べる。（未実装）
 		また、点対称、線対称でもパターンは一致するため、盤を反転、回転させても調べる（未実装）
 	*/
-	public int[][] serchPattern(int[][] bord,int tesuu){
+	public int[][] serchPattern(int[][] bord,boolean br,int tesuu){
 		
 		int count=0;
 		int i=0;
+		int i2=0;
 		int[][] returnInt;
 		List<int[]> handlePC=new ArrayList<int[]>();
 		List<int[]> secondPC=new ArrayList<int[]>();
-		while(count<5&&i<Bord.getLogs().size()){
+		while(count<5&&i<Bord.getLogs().size()-i2){
+			
+			//自分の勝ちパターンなら
+			if(Bord.getLogs().get(i).getLastOrFirst()==(br?0:1)){
 			int sameCount=0;
 			for(int j=0;j<Bord.X;j++)
 				for(int k=0;k<Bord.Y;k++){
@@ -50,10 +54,14 @@ public class AI {
 				}
 		//一致率
 			if(sameCount/(Bord.X*Bord.Y)==100){
+				System.out.println("勝ちパターン一致率100");
 				handlePC.add(new int[]{Bord.getLogs().get(0).get(tesuu)[Bord.Y][0],Bord.getLogs().get(0).get(tesuu)[Bord.Y][1]});
 				count++;
 			}else if(sameCount/(Bord.X*Bord.Y)>95){
 				secondPC.add(new int[]{Bord.getLogs().get(0).get(tesuu)[Bord.Y][0],Bord.getLogs().get(0).get(tesuu)[Bord.Y][1]});
+			}
+			}else{
+				i2++;
 			}
 			
 			i++;
@@ -85,8 +93,8 @@ public class AI {
 		
 	}
 	
-	public int[] setStorn(int[][] bord,int tesuu) {
-		int[] xy = serchPattern(bord,tesuu)[0];
+	public int[] setStorn(int[][] bord,boolean br,int tesuu) {
+		int[] xy = serchPattern(bord,br,tesuu)[0];
 		if (xy != null) {
 //			System.out.println(xy[0]+" y "+xy[1]);
 			return new int[] { xy[0], xy[1] };

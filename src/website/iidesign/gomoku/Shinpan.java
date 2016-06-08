@@ -111,10 +111,10 @@ public class Shinpan {
 
 	public boolean hantei(int x, int y, boolean br) {
 
-		String storn = br ? "__LOS0" : "__WIN1";//0:先手勝利,1:後手勝利
+		
 		if (victoryOrDefeat(x, y, br)){
 			try {
-				bord.endLog(storn);
+				bord.endLog(br);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -22,15 +22,15 @@ public class Bord {
 	protected static int bord[][];
 	private GraphicsContext gc;
 	private static Map<String, int[][]> log;
-	private static Map<String, HashMap<String, int[][]>> logs;
+	private static Map<String, Log> logs;
 	private int te=0;
 	
 	static CsvFileMaker csvMake;
 	public Bord() {		
 	}
 	public Bord(GraphicsContext gc) {
-		log=new HashMap<String, int[][]>();
-		logs=new Logs();
+		log=new Log();
+		logs=(Map<String, Log>) new Logs();
 		csvMake=new CsvFileMaker("log","log");
 		this.gc = gc;
 		Bord.bord = new int[X][Y];
@@ -72,13 +72,16 @@ public class Bord {
 	private void setLog(String value) throws IOException{
 		((Logs) logs).fetch();
 	}
-	public void endLog(String st) throws IOException{
+	public void endLog(boolean br) throws IOException{
+		String storn = br ? "__LOS0" : "__WIN1";//0:先手勝利,1:後手勝利
 //    Calendar c = Calendar.getInstance();
 		String maker="DATA__";
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM/dd/ HH:mm ss");
+    
+    ((Log) log).setLastOrFirst(br?0:1);
 
-		logs.put(maker+sdf.format(Calendar.getInstance().getTime())+st, (HashMap<String, int[][]>) log);
+		logs.put(maker+sdf.format(Calendar.getInstance().getTime())+storn, (Log) log);
 		((Logs) logs).fetch();
 	}
 	

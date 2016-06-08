@@ -45,7 +45,7 @@ public class Logs extends HashMap<String,Log>{
 					String key=stringList.get(i).split(",")[1];
 					System.out.println(key);
 					i++;
-					int[][] bord=new int[Bord.X][Bord.Y];
+					int[][] bord=new int[Bord.X+1][Bord.Y];
 					for(int j=0;j<Bord.Y;j++){
 						for(int k=0;k<Bord.X;k++){
 							bord[j][k]= Integer.parseInt(stringList.get(i).split(",")[k+2]);
@@ -54,6 +54,8 @@ public class Logs extends HashMap<String,Log>{
 					}
 					i--;
 					hashmap.setLastOrFirst(winOrLost);
+					bord[Bord.X][0]=Integer.parseInt(stringList.get(i).split(",")[0+2]);
+					bord[Bord.X][1]=Integer.parseInt(stringList.get(i).split(",")[0+3]);
 					hashmap.put(key, bord);
 //					System.out.println("stringListSIze"+stringList.size());
 //					System.out.println("put"+key);

@@ -59,7 +59,7 @@ public class AI {
 			//自分の勝ちパターンなら
 			if(Bord.getLogs().get(sortedKeys.get(i)).getLastOrFirst()==(br?0:1)){
 			int sameCount=0;
-			if(sortedKeys2.size()>tesuu){
+			if(sortedKeys2.size()-1>tesuu){
 			for(int j=0;j<Bord.X;j++)
 				for(int k=0;k<Bord.Y;k++){
 					

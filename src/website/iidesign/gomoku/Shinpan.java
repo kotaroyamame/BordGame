@@ -8,6 +8,28 @@ public class Shinpan {
 	public Shinpan(Bord bord) {
 		this.bord=bord;
 	}
+	
+	private boolean victoryOrDefeatFour(int x, int y, boolean br) {
+		int storn = br ? 0 : 1;
+		int count[]={0,0};
+		out: for (int i = 1; i <= 8; i++) {
+			count[0]=0;
+			for (int j = 1; j < 4; j++) {
+				
+				if (sarch(x, y, j, i) == storn && j == 3-count[1]) {
+					return true;
+				} else if (sarch(x, y, j, i) == storn) {
+					count[0]++;
+				} else {
+					count[1]=i%2==0?0:count[0];
+					count[0]=0;
+					continue out;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	private boolean victoryOrDefeat(int x, int y, boolean br) {
 		int storn = br ? 0 : 1;
@@ -112,7 +134,7 @@ public class Shinpan {
 	public boolean hantei(int x, int y, boolean br) {
 
 		
-		if (victoryOrDefeat(x, y, br)){
+		if (victoryOrDefeatFour(x, y, br)){
 			try {
 				bord.endLog(br);
 			} catch (IOException e) {

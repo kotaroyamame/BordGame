@@ -51,7 +51,7 @@ public class Controller implements Initializable {
 	@FXML
 	public void onLearning() {
 		this.init();
-		for (int i = 0; i < 20;i++) {
+		for (int i = 0; i < 100;i++) {
 			out:for (;;) {
 				if (finish)
 					break out;
@@ -60,7 +60,7 @@ public class Controller implements Initializable {
 
 				if (finish)
 					return;
-				comRanch();
+				aiRanch();
 			}
 		this.init();
 		}
@@ -110,7 +110,7 @@ public class Controller implements Initializable {
 		boolean aSet = bord.setStorn(comStone[0], comStone[1], false);
 		if (aSet) {
 			if (shinpan.hantei(comStone[0], comStone[1], false)) {
-				text1.setText("コンピュータの勝ちです");
+				text1.setText("後手コンピュータの勝ちです");
 				finish = true;
 			}
 		}
@@ -123,7 +123,7 @@ public class Controller implements Initializable {
 			boolean aSet = bord.setStorn(comStone[0], comStone[1], true);
 			if (aSet) {
 				if (shinpan.hantei(comStone[0], comStone[1], true)) {
-					text1.setText("コンピュータの勝ちです");
+					text1.setText("先手コンピュータの勝ちです");
 					finish = true;
 				}
 			}
@@ -135,7 +135,7 @@ public class Controller implements Initializable {
 		boolean aSet = bord.setStorn(comStone[0], comStone[1], false);
 		if (aSet) {
 			if (shinpan.hantei(comStone[0], comStone[1], false)) {
-				text1.setText("AIの勝ちです");
+				text1.setText("後手AIの勝ちです");
 				finish = true;
 			}
 		}
@@ -148,7 +148,7 @@ public class Controller implements Initializable {
 			boolean aSet = bord.setStorn(comStone[0], comStone[1], true);
 			if (aSet) {
 				if (shinpan.hantei(comStone[0], comStone[1], true)) {
-					text1.setText("AIの勝ちです");
+					text1.setText("先手AIの勝ちです");
 					finish = true;
 				}
 			}

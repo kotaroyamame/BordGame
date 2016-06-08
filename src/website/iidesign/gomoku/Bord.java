@@ -12,8 +12,8 @@ import website.iidesign.csvFileMaker.CsvFileMaker;
 
 public class Bord {
 
-	public final static int X = 15;
-	public final static int Y = 15;
+	public final static int X = 7;
+	public final static int Y = 7;
 	public final int SIZE = 20;
 	public final boolean IRON = false;
 	public final boolean INITIATIVE = true;

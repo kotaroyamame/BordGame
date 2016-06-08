@@ -98,30 +98,7 @@ public class Logs extends HashMap<String,HashMap<String,int[][]>>{
 		}
 		fileMaker.writeFile(String.valueOf(br.toString()),false);
 	}
-	/*
-	 * int[] serchPattern(int[][] bord,int tesuu)
-	//現在のボードの情報と何手目かを受け取り、個々の勝ちパターンのデータと比較して一致率が最も高いデータの一致率と
-	//、すべての打ちての座標を返す
-	*/
-	public int[] serchPattern(int[][] bord,int tesuu){
-		
-		int count=0;
-		while(count<5&&count<this.size()){
-			int sameCount=0;
-			for(int i=0;i<Bord.X;i++)
-				for(int j=0;j<Bord.Y;j++){
-					if(bord[i][j]==this.get(0).get(tesuu)[i][j]){
-						sameCount++;
-					}
-					
-					
-				}
-			System.out.println(sameCount/(Bord.X*Bord.Y));//一致率
-			count++;
-		}
-		
-		return new int[]{0,0};
-	}
+	
 
 
 }

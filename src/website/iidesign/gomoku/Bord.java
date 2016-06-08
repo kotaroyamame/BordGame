@@ -29,7 +29,7 @@ public class Bord {
 	public Bord() {		
 	}
 	public Bord(GraphicsContext gc) {
-		log=new HashMap();
+		log=new HashMap<String, int[][]>();
 		logs=new Logs();
 		csvMake=new CsvFileMaker("log","log");
 		this.gc = gc;
@@ -112,13 +112,14 @@ public class Bord {
 			this.drowBord(x, y, br);
 			stone=br ? 0 : 1;
 			Bord.bord[x][y] = stone;
-			int [][] _bord=new int[Bord.X][Bord.Y];
+			int [][] _bord=new int[Bord.X+1][Bord.Y];
 			for(int i=0;i<Bord.X;i++){
 				for(int j=0;j<Bord.Y;j++){
 					_bord[i][j]=Bord.bord[i][j];
 				}
 			}
-			
+			_bord[Bord.X][0]=x;
+			_bord[Bord.X][1]=y;
 			log.put(String.format("%1$04d teme", ++te),_bord);
 			
 //			try {
@@ -145,6 +146,10 @@ public class Bord {
 		if (x < 0 || X <= x || y < 0 || X <= y)
 			return -2;
 		return Bord.bord[x][y];
+	}
+	
+	public static Logs getLogs(){
+		return (Logs) logs;
 	}
 	
 

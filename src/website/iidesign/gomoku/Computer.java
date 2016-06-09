@@ -79,7 +79,7 @@ public class Computer extends Judge {
 		boolean forThreeFlag=false;
 		
 		if(10<COUNT){
-			anticipate=2;
+			anticipate=4;
 		}
 		ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
 		ArrayList<int[]> aiPoint = new ArrayList<int[]>();
@@ -96,6 +96,7 @@ public class Computer extends Judge {
 		int[][] pointData=new int[patten.length][5];
 		// {駒の種類、x座標,y座標,優先順位}のリスト
 		// int[][] priority;
+		for(int hp = 0; hp < 10; hp++)
 		for(int p = 0; p < patten.length; p++){
 			serchStone();
 			brankCells();
@@ -103,7 +104,21 @@ public class Computer extends Judge {
 			aiPoint.clear();
 			humanPoint.clear();
 			forThreeFlag=false;
+			//先読みの深さ
 			for (int i0 = 1; i0 <= anticipate; i0++) {
+				//相手の打ち手のパターン(可能性のあるものはすべて検索する)
+//				if(i0%2==0){
+//
+//					
+//					
+//					
+//					
+//					continue out;
+//				}
+
+				
+				//while(w<=repeat)
+					
 				if(forThreeFlag){
 					for(int m0=0;m0<patten.length;m0++){
 						patten[m0][3]=200;
@@ -121,6 +136,9 @@ public class Computer extends Judge {
 				// 人の3つ揃った石を検索
 				for (int i1 = 0; i1 < Bord.X; i1++) {
 					for (int j1 = 0; j1 < Bord.Y; j1++) {
+						//相手は何を打つかわからないのでとりあえずすべてのケースを想定
+						if(i0%2==0&&this.isBlank(new int[]{i1,j1}))
+							xyList.add(new int[] {i1,j1,0 });
 						//4
 						if (this.ifThree(i1, j1, i0%2==0?ai:human, 4)[0] == -1) {
 							System.out.println("相手の四を止める"+"x="+i1+"y="+ j1);
@@ -231,7 +249,12 @@ public class Computer extends Judge {
 				//仮想ボードに石をセット
 	//			boolean currentHA=false;
 	//			currentHA=i0%2==0?ai:human;
-				mindBord.setMindStorn(xyList.get(p%xyList.size())[0], xyList.get(p%xyList.size())[1], i0%2==0?ai:human);
+				if(i0%2==0)
+					mindBord.setMindStorn(xyList.get(hp%xyList.size())[0], xyList.get(hp%xyList.size())[1], human);
+				else
+					mindBord.setMindStorn(xyList.get(p%xyList.size())[0], xyList.get(p%xyList.size())[1], ai);
+				
+				//mindBord 上で勝ち、または四三が決まったかどうか
 				if(i0%2==0){
 					if(this.victoryOrDefeat(xyList.get(0)[0],xyList.get(0)[1],ai)){
 						humanPoint.add(new int[]{xyList.get(0)[0],xyList.get(0)[1],xyList.get(0)[2],10*(anticipate-i0)});
@@ -271,19 +294,20 @@ public class Computer extends Judge {
 			return new int[]{pointData[3][3],pointData[3][4]};
 		//ここにポイントの大小で最適手の判定処理
 		
-		//まずは相手のポイントが低い順にソート
+		//AIのポイントが高い順にソート
+		Arrays.sort(pointData,new Comparator<int[]>(){
+		@Override
+		public int compare(int[] arg0, int[] arg1) {
+			return arg0[2]-arg1[2]>0?-1:arg0[2]-arg1[2]==0?0:1;
+		}});
+		//ま相手のポイントが低い順にソート
 		Arrays.sort(pointData,new Comparator<int[]>(){
 			@Override
 			public int compare(int[] arg0, int[] arg1) {
 				return arg0[1]-arg1[1]>0?1:arg0[1]-arg1[1]==0?0:-1;
 			}});
 		
-	//次にAIのポイントが高い順にソート
-		Arrays.sort(pointData,new Comparator<int[]>(){
-			@Override
-			public int compare(int[] arg0, int[] arg1) {
-				return arg0[2]-arg1[2]>0?-1:arg0[2]-arg1[2]==0?0:1;
-			}});
+
 		System.out.println("優先順位");
 		for (int ff = 0; ff <pointData.length ; ff++) {
 			System.out.println("x"+pointData[ff][3]+" y "+pointData[ff][4]);

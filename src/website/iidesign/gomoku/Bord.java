@@ -22,15 +22,15 @@ public class Bord {
 	protected static int bord[][];
 	private GraphicsContext gc;
 	private static Map<String, int[][]> log;
-	private static Map<String, HashMap<String, int[][]>> logs;
-	private int te=0;
+	private static Logs logs;
+	private int tekazu=1;
 	
 	static CsvFileMaker csvMake;
 	public Bord() {		
 	}
 	public Bord(GraphicsContext gc) {
-		log=new HashMap();
-		logs=new Logs();
+		log=new Log();
+		logs= new Logs();
 		csvMake=new CsvFileMaker("log","log");
 		this.gc = gc;
 		Bord.bord = new int[X][Y];
@@ -72,14 +72,21 @@ public class Bord {
 	private void setLog(String value) throws IOException{
 		((Logs) logs).fetch();
 	}
-	public void endLog(String st) throws IOException{
+	public void endLog(boolean br) throws IOException{
+		if(tekazu<8){
+		String storn = br ? "__LOS0" : "__WIN1";//0:先手勝利,1:後手勝利
 //    Calendar c = Calendar.getInstance();
 		String maker="DATA__";
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM/dd/ HH:mm ss");
+    
+    ((Log) log).setLastOrFirst(br?0:1);
 
-		logs.put(maker+sdf.format(Calendar.getInstance().getTime())+st, (HashMap<String, int[][]>) log);
+		logs.put(maker+sdf.format(Calendar.getInstance().getTime())+storn, (Log) log);
 		((Logs) logs).fetch();
+		}else{
+			
+		}
 	}
 	
 	public int sarch(int x, int y, int val, int pt) {
@@ -112,15 +119,16 @@ public class Bord {
 			this.drowBord(x, y, br);
 			stone=br ? 0 : 1;
 			Bord.bord[x][y] = stone;
-			int [][] _bord=new int[Bord.X][Bord.Y];
+			int [][] _bord=new int[Bord.X+1][Bord.Y];
 			for(int i=0;i<Bord.X;i++){
 				for(int j=0;j<Bord.Y;j++){
 					_bord[i][j]=Bord.bord[i][j];
 				}
 			}
-			
-			log.put(String.format("%1$04d teme", ++te),_bord);
-			
+			_bord[Bord.X][0]=x;
+			_bord[Bord.X][1]=y;
+			log.put(String.format("%1$04d teme", tekazu),_bord);
+			++tekazu;
 //			try {
 //				setLog(String.valueOf(stone)+','+String.valueOf(x)+','+String.valueOf(y)+"\n");
 //			} catch (IOException e) {
@@ -145,6 +153,14 @@ public class Bord {
 		if (x < 0 || X <= x || y < 0 || X <= y)
 			return -2;
 		return Bord.bord[x][y];
+	}
+	
+	public static Logs getLogs(){
+		return logs;
+	}
+	
+	public int getTekazu(){
+		return tekazu;
 	}
 	
 

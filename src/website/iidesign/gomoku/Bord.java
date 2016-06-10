@@ -73,7 +73,7 @@ public class Bord {
 		((Logs) logs).fetch();
 	}
 	public void endLog(boolean br) throws IOException{
-		if(tekazu<8){
+		if(tekazu<25){
 		String storn = br ? "__LOS0" : "__WIN1";//0:先手勝利,1:後手勝利
 //    Calendar c = Calendar.getInstance();
 		String maker="DATA__";

@@ -18,9 +18,9 @@ public class Controller implements Initializable {
 	private Label text1;
 	@FXML
 	private Button restart;
-	GraphicsContext gc;
-	Bord bord;
-	Shinpan shinpan;
+	private GraphicsContext gc;
+	private Bord bord;
+	private Shinpan shinpan;
 	private boolean finish = false;
 	private Computer com;
 	private AI ai;
@@ -39,7 +39,7 @@ public class Controller implements Initializable {
 		finish = false;
 		text1.setText("");
 		com = new Computer();
-		ai = new AI();
+		ai = new AI(bord,shinpan );
 	}
 
 	@FXML
@@ -50,15 +50,15 @@ public class Controller implements Initializable {
 
 	@FXML
 	public void onLearning() {
-		this.init();
+//		this.init();
 //		for (int i0 = 0; i0 < 2000000000;i0++)
 //		for (int i1 = 0; i1 < 2000000000;i1++)
 //		for (int i2 = 0; i2 < 2000000000;i2++)
 //		for (int i3 = 0; i3 < 2000000000;i3++)
-		for (int i = 0; i < 2000;i++) {
-			
+		for (int i = 0; i < 2;i++) {
+			this.init();
 			out:for (;;) {
-				if (finish||bord.getTekazu()>1000)
+				if (finish||bord.getTekazu()>8)
 					break out;
 
 				aiRanch2();
@@ -67,7 +67,7 @@ public class Controller implements Initializable {
 					return;
 				aiRanch();
 			}
-		this.init();
+		
 		}
 	}
 

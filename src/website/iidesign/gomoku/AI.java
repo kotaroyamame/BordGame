@@ -8,13 +8,17 @@ import website.iidesign.csvFileMaker.CsvFileMaker;
 
 public class AI {
 	
-	MindBord mindBord;
+	private MindBord mindBord;
+	private Bord bordObj;
+	private Shinpan shinpan;
 	protected ArrayList<int[]> brankList = new ArrayList<int[]>();
 	private int bord[][];
 	
 //	CsvFileMaker csvMake=new CsvFileMaker("log","aiLog");
-	public AI() {
+	public AI(Bord bord,Shinpan shinpan) {
+		this.bordObj=bord;
 		this.mindBord=new MindBord();
+		this.shinpan=shinpan;
 	}
 	
 	private void brankCells() {
@@ -39,6 +43,7 @@ public class AI {
 		int count=0;
 		int i=0;
 		int i2=0;
+		
 		int[][] returnInt;
 		List<int[]> handlePC=new ArrayList<int[]>();
 		List<int[]> secondPC=new ArrayList<int[]>();
@@ -54,8 +59,6 @@ public class AI {
 			List<String> sortedKeys2 = new ArrayList<String>(Bord.getLogs().get(sortedKeys.get(i)).keySet());
 			
 			Collections.sort(sortedKeys2);
-			System.out.println("getLastOrFirst()");
-			System.out.println(Bord.getLogs().get(sortedKeys.get(i)).getLastOrFirst());
 			//自分の勝ちパターンなら
 			if(Bord.getLogs().get(sortedKeys.get(i)).getLastOrFirst()==(br?0:1)){
 			int sameCount=0;
@@ -63,23 +66,31 @@ public class AI {
 			for(int j=0;j<Bord.X;j++)
 				for(int k=0;k<Bord.Y;k++){
 					
-					if(bord[j][k]==Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[j][k]){
+					if(bord[j][k]==Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu-(br?2:1)))[j][k]){
 						sameCount++;
 					}
 					
 				}
 			}
-		//一致率
-			if(sameCount/(Bord.X*Bord.Y)==100){
+			if(sortedKeys2.size()>tesuu){
+			int x=Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu-(br?1:0)))[Bord.Y][0];
+			int y=Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu-(br?1:0)))[Bord.Y][1];
+System.out.println((sameCount/(Bord.X*Bord.Y*1.0D))*100);
+			//一致率
+			if((sameCount/(Bord.X*Bord.Y*1.0D))*100==100){
 				System.out.println("勝ちパターン一致率100");
-				handlePC.add(new int[]{Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][0],Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][1]});
+				handlePC.add(new int[]{x,y});
 				count++;
-			}else if(sameCount/(Bord.X*Bord.Y)>80&&false){
+			}else if(sameCount/(Bord.X*Bord.Y*1.0D)*100>94&&!this.bordObj.isStorn(x,y)&&shinpan.ifFoul(x, y, br)==-1){
 				System.out.println("勝ちパターン一致率80");
-				secondPC.add(new int[]{Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][0],Bord.getLogs().get(sortedKeys.get(i)).get(sortedKeys2.get(tesuu))[Bord.Y][1]});
+				secondPC.add(new int[]{x,y});
+				count++;
 			}
 			}else{
 				i2++;
+			}
+			}else{
+//				i2++;
 			}
 			
 			i++;

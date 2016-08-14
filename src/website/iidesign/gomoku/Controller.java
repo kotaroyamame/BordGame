@@ -96,12 +96,12 @@ public class Controller implements Initializable {
 			 boolean hSet=bord.setStorn(_x, _y, true);
 			 if (hSet){
 			 if (shinpan.hantei(_x, _y, true)) {
-			 text1.setText("あなたの勝ちです");
-			 finish = true;
-			 }
+				 text1.setText("あなたの勝ちです");
+				 	finish = true;
+				 }
 			 }
 			 }else if(shinpan.ifFoul(_x, _y, true)==0){
-			 text1.setText("先手の三々は反則です");
+				 text1.setText("先手の三々は反則です");
 			 }
 
 			// ここまで人

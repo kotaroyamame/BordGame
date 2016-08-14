@@ -295,9 +295,9 @@ public class Judge {
 		}
 		
 			return new int[] { -2, 0, 0 };
-
-		
+	
 	}
+	
 	private int[] ifJunpThree(int x, int y, boolean br) {
 	
 		int storn = br ? 0 : 1;

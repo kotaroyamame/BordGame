@@ -1,6 +1,7 @@
 package website.iidesign.gomoku;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 
 public class Controller implements Initializable {
@@ -18,12 +20,55 @@ public class Controller implements Initializable {
 	private Label text1;
 	@FXML
 	private Button restart;
+	@FXML
+	private MenuItem English;
+	@FXML
+	private MenuItem Japanise;
 	GraphicsContext gc;
 	Bord bord;
 	Shinpan shinpan;
 	private boolean finish = false;
 	private Computer com;
 	private AI ai;
+	private String nowLang="en";
+	
+	@SuppressWarnings("serial")
+	private HashMap<String,HashMap<String,String> > langObject =new HashMap<String,HashMap<String,String> >(){
+		{
+		put("restart",new HashMap<String,String>(){
+			{
+				put("en","Restart");
+				put("ja","再スタート"); 
+			}
+			});
+		put("youWin",new HashMap<String,String>(){
+			{
+				put("en","YouWin!!");
+				put("ja","あなたの勝ちです"); 
+			}
+			});
+		put("youLost",new HashMap<String,String>(){
+			{
+				put("en","YouLost");
+				put("ja","あなたの負けです"); 
+			}
+			});
+		put("faul_3-3",new HashMap<String,String>(){
+			{
+				put("en","It\'s faul");
+				put("ja","先手の三々は反則です"); 
+			}
+			});
+		put("yourTurn",new HashMap<String,String>(){
+			{
+				put("en","It's your turn");
+				put("ja","あなたの番です"); 
+				
+			}
+			});
+		}
+	};
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -40,6 +85,27 @@ public class Controller implements Initializable {
 		text1.setText("");
 		com = new Computer();
 		ai = new AI();
+	}
+	
+	@FXML
+	private void setLanguageEnglish(){
+		
+		this.setLanguage("en");
+		
+	}
+	
+	@FXML
+	private void setLanguageJapanise(){
+		
+		this.setLanguage("ja");
+		
+	}
+	private void setLanguage(String val){
+		
+		this.nowLang = val;
+		
+		restart.setText(this.langObject.get("restart").get(val));
+		
 	}
 
 	@FXML
@@ -85,7 +151,7 @@ public class Controller implements Initializable {
 			
 			 int hbr=shinpan.ifFoul(_x, _y, true);
 			 if(hbr==-1){
-			 text1.setText("あなたの番です");
+			 text1.setText(this.langObject.get("yourTurn").get(this.nowLang));
 
 			// ここまで人
 
@@ -96,12 +162,12 @@ public class Controller implements Initializable {
 			 boolean hSet=bord.setStorn(_x, _y, true);
 			 if (hSet){
 			 if (shinpan.hantei(_x, _y, true)) {
-			 text1.setText("あなたの勝ちです");
+			 text1.setText(this.langObject.get("youWin").get(this.nowLang));
 			 finish = true;
 			 }
 			 }
 			 }else if(shinpan.ifFoul(_x, _y, true)==0){
-			 text1.setText("先手の三々は反則です");
+			 text1.setText(this.langObject.get("faul_3-3").get(this.nowLang));
 			 }
 
 			// ここまで人
@@ -116,7 +182,7 @@ public class Controller implements Initializable {
 		boolean aSet = bord.setStorn(comStone[0], comStone[1], false);
 		if (aSet) {
 			if (shinpan.hantei(comStone[0], comStone[1], false)) {
-				text1.setText("後手コンピュータの勝ちです");
+				text1.setText(this.langObject.get("youLost").get(this.nowLang));
 				finish = true;
 			}
 		}
@@ -129,7 +195,7 @@ public class Controller implements Initializable {
 			boolean aSet = bord.setStorn(comStone[0], comStone[1], true);
 			if (aSet) {
 				if (shinpan.hantei(comStone[0], comStone[1], true)) {
-					text1.setText("先手コンピュータの勝ちです");
+					text1.setText(this.langObject.get("youWin").get(this.nowLang));
 					finish = true;
 				}
 			}

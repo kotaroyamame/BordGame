@@ -79,18 +79,18 @@ public class Computer extends Judge {
 		boolean forThreeFlag=false;
 		
 		if(10<COUNT){
-			anticipate=2;
+			anticipate=1;
 		}
 		ArrayList<int[]> xyList = new ArrayList<int[]>();// コマを置く座標
 		ArrayList<int[]> aiPoint = new ArrayList<int[]>();
 		ArrayList<int[]> humanPoint = new ArrayList<int[]>();
 		//現在先手の予想の際に禁じ手を考慮していないので後で実装する
 		int[][] patten={
-				{110,76,231,67,12,5,55,95},//優先順位  {相手の四を止める,相手の三を止める,自分の五を打つ,自分の四を打つ,自分の三を打つ,自分の二を打つ,自分の三三を打つ,自分の四三を打つ}
-				{110,76,231,67,12,5,55,95},
-				{110,76,231,67,12,5,55,95},
-				{110,76,231,67,12,5,55,95},
-				{110,76,231,67,12,5,55,95},
+				{110,76,231,67,12,5,55,100},//優先順位  {相手の四を止める,相手の三を止める,自分の五を打つ,自分の四を打つ,自分の三を打つ,自分の二を打つ,自分の三三を打つ,自分の四三を打つ}
+				{110,76,231,67,12,5,55,100},
+				{110,76,231,67,12,5,55,100},
+				{110,76,231,67,12,5,55,100},
+				{110,76,231,67,12,5,55,100},
 		};
 		//pointData{index(p),相手ポイントの合計,AIポイントの合計,次の手のx座標,次の手のx座標}*patten.length
 		int[][] pointData=new int[patten.length][5];
@@ -124,28 +124,31 @@ public class Computer extends Judge {
 						//4
 						if (this.ifThree(i1, j1, i0%2==0?ai:human, 4)[0] == -1) {
 							System.out.println("相手の四を止める"+"x="+i1+"y="+ j1);
-							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?ai:human, 4)[1], this.ifThree(i1, j1, i0%2==0?ai:human, 4)[2],
-							    this.ifThree(i1, j1, i0%2==0?ai:human, 4)[3] + patten[p][0] });
+							
+							int[] _ifThree_4 = this.ifThree(i1, j1, i0%2==0?ai:human, 4);
+							
+							xyList.add(new int[] { _ifThree_4 [1], _ifThree_4 [2],
+									_ifThree_4[3] + patten[p][0] });
 						}
 						//3
 						if (this.ifThree(i1, j1, i0%2==0?ai:human)[0] == -1) {
+							
+							int[] _ifThree_3 = this.ifThree(i1, j1, i0%2==0?ai:human);
+							
 							System.out.println("相手の三を止める"+"x="+i1+"y="+ j1);
-							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?ai:human)[1], this.ifThree(i1, j1, i0%2==0?ai:human)[2],
-							    this.ifThree(i1, j1, i0%2==0?ai:human)[3] + patten[p][1] });
+							xyList.add(new int[] { _ifThree_3[1], _ifThree_3[2],
+									_ifThree_3[3] + patten[p][1] });
 	
 						}
-//						if (this.ifThree(i1, j1, i0%2==0?human:ai, 5)[0] == -1) {
-//							System.out.println("自分の5を打つ"+"x="+i1+"y="+ j1);
-//							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?human:ai, 5)[1], this.ifThree(i1, j1, i0%2==0?human:ai, 5)[2],
-//							    this.ifThree(i1, j1, i0%2==0?human:ai, 5)[3] + patten[p][2] });
-//	
-//						}
+
 						if (this.ifThree(i1, j1, i0%2==0?human:ai, 4)[0] == -1) {
 							System.out.println("自分の5を打つ"+"x="+i1+"y="+ j1);
-							xyList.add(new int[] { this.ifThree(i1, j1, i0%2==0?human:ai,4)[1], this.ifThree(i1, j1, i0%2==0?human:ai, 4)[2],
-							    this.ifThree(i1, j1, i0%2==0?human:ai, 4)[3] +  patten[p][2]});
+							int[] _ifThreeSelf_4 = this.ifThree(i1, j1, i0%2==0?human:ai,4);
+							xyList.add(new int[] { _ifThreeSelf_4[1], _ifThreeSelf_4[2],
+									_ifThreeSelf_4[3] +  patten[p][2]});
 	
 						}
+						
 						if (threeThree(i1, j1, i0%2==0?human:ai)[0] == -1) {
 							System.out.println("自分の三三"+"x="+i1+"y="+ j1);
 							xyList.add(new int[] { i1, j1, patten[p][6] });
@@ -297,7 +300,6 @@ public class Computer extends Judge {
 		this.serchStone();
 		int[] xy = this.isRen(1);
 		if (xy != null) {
-//			System.out.println(xy[0]+" y "+xy[1]);
 			return new int[] { xy[0], xy[1] };
 		}
 		xy = brankList.get((int) Math.floor(Math.random() * brankList.size()));

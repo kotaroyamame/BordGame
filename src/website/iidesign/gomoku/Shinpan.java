@@ -135,11 +135,12 @@ public class Shinpan {
 
 		
 		if (victoryOrDefeat(x, y, br)){
-			try {
-				bord.endLog(br);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			//ログファイル保存
+//			try {
+//				bord.endLog(br);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 			return true;
 		}
 		return false;

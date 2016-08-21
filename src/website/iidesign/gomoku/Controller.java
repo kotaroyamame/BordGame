@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -29,10 +32,10 @@ public class Controller implements Initializable {
 	Shinpan shinpan;
 	private boolean finish = false;
 	private Computer com;
-	private String nowLang="en";
+	private static String nowLang="en";
 	
 	@SuppressWarnings("serial")
-	private HashMap<String,HashMap<String,String> > langObject =new HashMap<String,HashMap<String,String> >(){
+	public final static HashMap<String,HashMap<String,String> > langObject =new HashMap<String,HashMap<String,String> >(){
 		{
 		put("restart",new HashMap<String,String>(){
 			{
@@ -65,8 +68,17 @@ public class Controller implements Initializable {
 				
 			}
 			});
+		put("wait",new HashMap<String,String>(){
+			{
+				put("en","Please wait");
+				put("ja","コンピュータ思考中"); 
+				
+			}
+			});
 		}
 	};
+	
+	private static Boolean comLunchflg=false;
 
 
 	@Override
@@ -102,7 +114,7 @@ public class Controller implements Initializable {
 		
 		this.nowLang = val;
 		
-		restart.setText(this.langObject.get("restart").get(val));
+		restart.setText(langObject.get("restart").get(val));
 		
 	}
 
@@ -115,7 +127,7 @@ public class Controller implements Initializable {
 	@FXML
 	private void clickCanvas(MouseEvent e) {
 		
-			if (finish)
+			if (finish||comLunchflg)
 				return;
 
 			 int _x = (int) Math.floor(e.getX()) / bord.SIZE;
@@ -123,33 +135,57 @@ public class Controller implements Initializable {
 			
 			 int hbr=shinpan.ifFoul(_x, _y, true);
 			 if(hbr==-1){
-			 text1.setText(this.langObject.get("yourTurn").get(this.nowLang));
-
-			 boolean hSet=bord.setStorn(_x, _y, true);
-			 if (hSet){
-			 if (shinpan.hantei(_x, _y, true)) {
-			 text1.setText(this.langObject.get("youWin").get(this.nowLang));
-			 finish = true;
-			 }
-			 }
+				 text1.setText(langObject.get("yourTurn").get(nowLang));
+	
+				 boolean hSet=bord.setStorn(_x, _y, true);
+				 if (hSet){
+					 if (shinpan.hantei(_x, _y, true)) {
+						 text1.setText(langObject.get("youWin").get(nowLang));
+						 finish = true;
+					 }
+				 }
 			 }else if(shinpan.ifFoul(_x, _y, true)==0){
-			 text1.setText(this.langObject.get("faul_3-3").get(this.nowLang));
+			 text1.setText(langObject.get("faul_3-3").get(nowLang));
 			 }
 
 			 if (finish)
 					return;
-				comRanch();
-	}
-
-	private void comRanch() {
-		int[] comStone = com.setStorn();
-		boolean aSet = bord.setStorn(comStone[0], comStone[1], false);
-		if (aSet) {
-			if (shinpan.hantei(comStone[0], comStone[1], false)) {
-				text1.setText(this.langObject.get("youLost").get(this.nowLang));
-				finish = true;
-			}
-		}
+			 
+			 Task<Boolean> comTask = new Task<Boolean>(){
+			    @Override
+			    protected Boolean call() throws Exception{
+			    	int[] comStone = com.setStorn();
+			  		
+			  		Platform.runLater(() ->text1.setText(langObject.get("wait").get(nowLang)));
+			  		
+			  		Thread.sleep( 1400 );
+			  		
+			  		boolean aSet = bord.setStorn(comStone[0], comStone[1], false);
+			  		if (aSet) {
+			  			if (shinpan.hantei(comStone[0], comStone[1], false)) {
+			  				Platform.runLater(() ->text1.setText(langObject.get("youLost").get(nowLang)));
+			  				finish = true;
+			  			}else{
+			  				Platform.runLater(() ->text1.setText(langObject.get("yourTurn").get(nowLang)));
+			  			}
+			  		}  
+			  		comLunchflg=false;
+			  		
+			      return true; 
+			    }
+			 };
+			 
+			 try{
+				 Thread t = new Thread( comTask );
+				 t.setDaemon( true );
+				 comLunchflg=true;
+				 t.start();
+			 }catch(Exception e1){
+				 
+				 System.err.println(e1);
+				 
+			 }
+			
 	}
 
 }

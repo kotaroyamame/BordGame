@@ -44,11 +44,7 @@ public class Bord {
 				Bord.bord[i][j] = -1;
 		}
 		gc.clearRect(0, 0, 1000, 1000);
-//		try {
-//			setLog("START"+"\n");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+
 	}
 
 	private void strokeLine() {
@@ -75,7 +71,7 @@ public class Bord {
 	public void endLog(boolean br) throws IOException{
 		if(tekazu<8){
 		String storn = br ? "__LOS0" : "__WIN1";//0:先手勝利,1:後手勝利
-//    Calendar c = Calendar.getInstance();
+
 		String maker="DATA__";
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM/dd/ HH:mm ss");
@@ -129,11 +125,6 @@ public class Bord {
 			_bord[Bord.X][1]=y;
 			log.put(String.format("%1$04d teme", tekazu),_bord);
 			++tekazu;
-//			try {
-//				setLog(String.valueOf(stone)+','+String.valueOf(x)+','+String.valueOf(y)+"\n");
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
 			count = !br;
 			return true;
 		} else {

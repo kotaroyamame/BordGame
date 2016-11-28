@@ -1,5 +1,6 @@
 package website.iidesign.gomoku;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -176,7 +177,7 @@ public class Bord {
 		Clip clip = null;
         AudioInputStream audioInputStream;
         try{   
-            audioInputStream = AudioSystem.getAudioInputStream(Bord.class.getResourceAsStream("01.wav"));
+            audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(getClass().getResourceAsStream("01.wav")));
             AudioFormat audioFormat = audioInputStream.getFormat();
             DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
             clip = (Clip)AudioSystem.getLine(info);

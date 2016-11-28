@@ -175,9 +175,8 @@ public class Bord {
 	public void sound(){
 		Clip clip = null;
         AudioInputStream audioInputStream;
-        try
-        {   File soundFile = new File("sound/01.wav");
-            audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+        try{   
+            audioInputStream = AudioSystem.getAudioInputStream(Bord.class.getResourceAsStream("01.wav"));
             AudioFormat audioFormat = audioInputStream.getFormat();
             DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
             clip = (Clip)AudioSystem.getLine(info);

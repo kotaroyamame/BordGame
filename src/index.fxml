@@ -9,7 +9,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="600.0" style="-fx-background-color:#A6523F;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="website.iidesign.gomoku.Controller">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="600.0" style="-fx-background-color:#A6523F;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="website.iidesign.gomoku.Controller">
   <children>
     <Canvas fx:id="canvas" height="300.0" layoutX="151.0" layoutY="176.0" onMouseClicked="#clickCanvas" scaleX="1.7633333565710816" scaleY="1.7183852651286544" style="" width="300.0" />
     <Label fx:id="text1" alignment="CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="20.0" prefWidth="467.5" text="">
@@ -26,10 +26,16 @@
       <menus>
         <Menu mnemonicParsing="false" text="Language">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#setLanguageEnglish" text="English" fx:id="English" />
-            <MenuItem mnemonicParsing="false" onAction="#setLanguageJapanise" text="日本語" fx:id="Japanise" />
+            <MenuItem fx:id="English" mnemonicParsing="false" onAction="#setLanguageEnglish" text="English" />
+            <MenuItem fx:id="Japanise" mnemonicParsing="false" onAction="#setLanguageJapanise" text="日本語" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="Sound">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onSound" text="On" />
+                  <MenuItem mnemonicParsing="false" onAction="#offSound" text="Off" />
+               </items>
+            </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="About" />

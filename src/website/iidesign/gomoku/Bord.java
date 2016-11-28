@@ -1,10 +1,19 @@
 package website.iidesign.gomoku;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -24,6 +33,7 @@ public class Bord {
 	private static Map<String, int[][]> log;
 	private static Logs logs;
 	private int tekazu=1;
+	private boolean isSound=true;
 	
 	static CsvFileMaker csvMake;
 	public Bord() {		
@@ -109,6 +119,8 @@ public class Bord {
 	}
 
 	public boolean setStorn(int x, int y, boolean br) {
+		if(this.isSound)
+			this.sound();
 		int stone;
 		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br) { //&& Shinpan.ifFoul(x, y, br)!=-1) {
 
@@ -152,6 +164,33 @@ public class Bord {
 	
 	public int getTekazu(){
 		return tekazu;
+	}
+	
+	public void soundMute(){
+		this.isSound=false;
+	}
+	public void soundOn(){
+		this.isSound=true;
+	}
+	public void sound(){
+		Clip clip = null;
+        AudioInputStream audioInputStream;
+        try
+        {   File soundFile = new File("sound/01.wav");
+            audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+            AudioFormat audioFormat = audioInputStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
+            clip = (Clip)AudioSystem.getLine(info);
+            clip.open(audioInputStream);
+            clip.start();
+        }
+        catch (UnsupportedAudioFileException e)
+        {   e.printStackTrace();  }
+        catch (IOException e)
+        {   e.printStackTrace();  }
+        catch (LineUnavailableException e)
+        {   e.printStackTrace();  }
+
 	}
 	
 

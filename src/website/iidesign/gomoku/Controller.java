@@ -96,6 +96,15 @@ public class Controller implements Initializable {
 		text1.setText("");
 		com = new Computer();
 	}
+	@FXML
+	private void onSound(){
+		this.bord.soundOn();
+	}
+	
+	@FXML
+	private void offSound(){
+		this.bord.soundMute();
+	}
 	
 	@FXML
 	private void setLanguageEnglish(){

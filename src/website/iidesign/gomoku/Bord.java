@@ -35,6 +35,7 @@ public class Bord {
 	private static Logs logs;
 	private int tekazu=1;
 	private boolean isSound=true;
+	private Clip clip = null;
 	
 	static CsvFileMaker csvMake;
 	public Bord() {		
@@ -55,6 +56,7 @@ public class Bord {
 				Bord.bord[i][j] = -1;
 		}
 		gc.clearRect(0, 0, 1000, 1000);
+		
 
 	}
 
@@ -119,9 +121,8 @@ public class Bord {
 		}
 	}
 
-	public boolean setStorn(int x, int y, boolean br) {
-		if(this.isSound)
-			this.sound();
+	public synchronized boolean setStorn(int x, int y, boolean br) {
+		
 		int stone;
 		if (x < X && y < Y && Bord.bord[x][y] == -1 && count == br) { //&& Shinpan.ifFoul(x, y, br)!=-1) {
 
@@ -139,6 +140,8 @@ public class Bord {
 			log.put(String.format("%1$04d teme", tekazu),_bord);
 			++tekazu;
 			count = !br;
+			if(this.isSound)
+				this.sound();
 			return true;
 		} else {
 			return false;
@@ -174,8 +177,7 @@ public class Bord {
 		this.isSound=true;
 	}
 	public void sound(){
-		Clip clip = null;
-        AudioInputStream audioInputStream;
+		AudioInputStream audioInputStream;
         try{   
             audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(getClass().getResourceAsStream("01.wav")));
             AudioFormat audioFormat = audioInputStream.getFormat();
@@ -190,6 +192,7 @@ public class Bord {
         {   e.printStackTrace();  }
         catch (LineUnavailableException e)
         {   e.printStackTrace();  }
+        
 
 	}
 	

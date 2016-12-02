@@ -153,8 +153,9 @@ public class Controller implements Initializable {
 						 finish = true;
 					 }
 				 }
-			 }else if(shinpan.ifFoul(_x, _y, true)==0){
-			 text1.setText(langObject.get("faul_3-3").get(nowLang));
+			 }else if(hbr==0){
+				 text1.setText(langObject.get("faul_3-3").get(nowLang));
+				 return;
 			 }
 
 			 if (finish)

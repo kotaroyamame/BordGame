@@ -1,13 +1,19 @@
 package website.iidesign.gomoku;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Control;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -19,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
-import net.arnx.jsonic.JSON;
 
 public class Controller implements Initializable {
 	@FXML
@@ -100,7 +105,6 @@ public class Controller implements Initializable {
 
 	@FXML
 	private void clickCanvas(MouseEvent e) {
-		
 			if (finish||comLunchflg)
 				return;
 
@@ -115,6 +119,7 @@ public class Controller implements Initializable {
 				 if (hSet){
 					 if (shinpan.hantei(_x, _y, true)) {
 						 text1.setText(words.getYouWin());
+						 sound("trumpet1");
 						 finish = true;
 					 }
 				 }
@@ -139,6 +144,7 @@ public class Controller implements Initializable {
 			  		if (aSet) {
 			  			if (shinpan.hantei(comStone[0], comStone[1], false)) {
 			  				Platform.runLater(() ->text1.setText(words.getYouLost()));
+			  				sound("j-13");
 			  				finish = true;
 			  			}else{
 			  				Platform.runLater(() ->text1.setText(words.getYouTrun()));
@@ -161,6 +167,28 @@ public class Controller implements Initializable {
 				 
 			 }
 			
+	}
+	private void sound(String fileName){
+		Clip clip = null;
+		AudioInputStream audioInputStream;
+        try{   
+            audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(getClass().getResourceAsStream(fileName+".wav")));
+            AudioFormat audioFormat = audioInputStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
+            clip = (Clip)AudioSystem.getLine(info);
+            clip.open(audioInputStream);
+            clip.start();
+            clip.drain();
+            clip.close();
+        }
+        catch (UnsupportedAudioFileException e)
+        {   e.printStackTrace();  }
+        catch (IOException e)
+        {   e.printStackTrace();  }
+        catch (LineUnavailableException e)
+        {   e.printStackTrace();  }
+        
+
 	}
 
 }

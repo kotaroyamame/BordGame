@@ -1,5 +1,9 @@
 package website.iidesign.gomoku;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -15,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import net.arnx.jsonic.JSON;
 
 public class Controller implements Initializable {
 	@FXML
@@ -32,54 +37,10 @@ public class Controller implements Initializable {
 	Shinpan shinpan;
 	private boolean finish = false;
 	private Computer com;
-	private static String nowLang="en";
-	
-	@SuppressWarnings("serial")
-	public final static HashMap<String,HashMap<String,String> > langObject =new HashMap<String,HashMap<String,String> >(){
-		{
-		put("restart",new HashMap<String,String>(){
-			{
-				put("en","Restart");
-				put("ja","再スタート"); 
-			}
-			});
-		put("youWin",new HashMap<String,String>(){
-			{
-				put("en","YouWin!!");
-				put("ja","あなたの勝ちです"); 
-			}
-			});
-		put("youLost",new HashMap<String,String>(){
-			{
-				put("en","YouLost");
-				put("ja","あなたの負けです"); 
-			}
-			});
-		put("faul_3-3",new HashMap<String,String>(){
-			{
-				put("en","It\'s faul");
-				put("ja","先手の三々は反則です"); 
-			}
-			});
-		put("yourTurn",new HashMap<String,String>(){
-			{
-				put("en","It's your turn");
-				put("ja","あなたの番です"); 
-				
-			}
-			});
-		put("wait",new HashMap<String,String>(){
-			{
-				put("en","Please wait");
-				put("ja","コンピュータ思考中"); 
-				
-			}
-			});
-		}
-	};
-	
+	private String nowLang="en";
 	private static Boolean comLunchflg=false;
-
+	private Lang lang=new Lang();
+	private Words words;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -95,6 +56,7 @@ public class Controller implements Initializable {
 		finish = false;
 		text1.setText("");
 		com = new Computer();
+		this.words=lang.getLangObj(nowLang);
 	}
 	@FXML
 	private void onSound(){
@@ -123,7 +85,10 @@ public class Controller implements Initializable {
 		
 		this.nowLang = val;
 		
-		restart.setText(langObject.get("restart").get(val));
+		this.words = this.lang.getLangObj(this.nowLang);
+		
+		restart.setText(words.getRestart());
+		
 		
 	}
 
@@ -144,17 +109,17 @@ public class Controller implements Initializable {
 			
 			 int hbr=shinpan.ifFoul(_x, _y, true);
 			 if(hbr==-1){
-				 text1.setText(langObject.get("yourTurn").get(nowLang));
+				 text1.setText(words.getYouTrun());
 	
 				 boolean hSet=bord.setStorn(_x, _y, true);
 				 if (hSet){
 					 if (shinpan.hantei(_x, _y, true)) {
-						 text1.setText(langObject.get("youWin").get(nowLang));
+						 text1.setText(words.getYouWin());
 						 finish = true;
 					 }
 				 }
 			 }else if(hbr==0){
-				 text1.setText(langObject.get("faul_3-3").get(nowLang));
+				 text1.setText(words.getFaul_3_3());
 				 return;
 			 }
 
@@ -166,17 +131,17 @@ public class Controller implements Initializable {
 			    protected Boolean call() throws Exception{
 			    	int[] comStone = com.setStorn();
 			  		
-			  		Platform.runLater(() ->text1.setText(langObject.get("wait").get(nowLang)));
+			  		Platform.runLater(() ->text1.setText(words.getWait()));
 			  		
 			  		Thread.sleep( 1400 );
 			  		
 			  		boolean aSet = bord.setStorn(comStone[0], comStone[1], false);
 			  		if (aSet) {
 			  			if (shinpan.hantei(comStone[0], comStone[1], false)) {
-			  				Platform.runLater(() ->text1.setText(langObject.get("youLost").get(nowLang)));
+			  				Platform.runLater(() ->text1.setText(words.getYouLost()));
 			  				finish = true;
 			  			}else{
-			  				Platform.runLater(() ->text1.setText(langObject.get("yourTurn").get(nowLang)));
+			  				Platform.runLater(() ->text1.setText(words.getYouTrun()));
 			  			}
 			  		}  
 			  		comLunchflg=false;

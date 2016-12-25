@@ -15,7 +15,10 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import com.sun.org.apache.xerces.internal.utils.XMLSecurityPropertyManager.Property;
+
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -178,8 +181,6 @@ public class Controller implements Initializable {
             clip = (Clip)AudioSystem.getLine(info);
             clip.open(audioInputStream);
             clip.start();
-            clip.drain();
-            clip.close();
         }
         catch (UnsupportedAudioFileException e)
         {   e.printStackTrace();  }
@@ -187,8 +188,5 @@ public class Controller implements Initializable {
         {   e.printStackTrace();  }
         catch (LineUnavailableException e)
         {   e.printStackTrace();  }
-        
-
 	}
-
 }
